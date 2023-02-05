@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native"; // We have to import each thing we want to use, un like in React JS where we were able to use the HTML btn without importing it or anything.
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  ScrollView,
+} from "react-native"; // We have to import each thing we want to use, un like in React JS where we were able to use the HTML btn without importing it or anything.
 
 // {Core Components} -> View, Text, Image, ScrollView, TextInput
 export default function App() {
@@ -30,16 +37,19 @@ export default function App() {
       </View>
       {/* 2nd View is used to view the list of goals that we have entered*/}
       <View style={styles.goalsContainer}>
-        {courseGoals.map((goal) => (
-          // We added a "<View>" here because we were not getting Rounder Corners in IOS, because React Native in Andriod -> Text Element support that property of "borderRadius" but in IOS.
-          // We are not having text white because we have applied CSS style props to "<View>" instead of <Text>, Unlike CSS in web CSS doesn't cascade in React Native. "Casading" is that the Child element can inherite the CSS of parent element but we don't have this in React Native.
-          <View style={styles.goalItem} key={goal}>
-            <Text style={styles.goalText} key={goal}>
-              {goal}
-              {/* // we can do this because goal is just a string */}
-            </Text>
-          </View>
-        ))}
+        <ScrollView alwaysBounceVertical={false}>
+          {/* "alwaysBounceVertical" is "bounce effect" on Scroll that is iOS specific */}
+          {courseGoals.map((goal) => (
+            // We added a "<View>" here because we were not getting Rounder Corners in IOS, because React Native in Andriod -> Text Element support that property of "borderRadius" but in IOS.
+            // We are not having text white because we have applied CSS style props to "<View>" instead of <Text>, Unlike CSS in web CSS doesn't cascade in React Native. "Casading" is that the Child element can inherite the CSS of parent element but we don't have this in React Native.
+            <View style={styles.goalItem} key={goal}>
+              <Text style={styles.goalText} key={goal}>
+                {goal}
+                {/* // we can do this because goal is just a string */}
+              </Text>
+            </View>
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
@@ -84,5 +94,5 @@ const styles = StyleSheet.create({
 
   goalText: {
     color: "white",
-  }
+  },
 });
