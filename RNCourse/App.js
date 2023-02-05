@@ -2,23 +2,16 @@ import { useState } from "react";
 import {
   StyleSheet,
   View,
-  Button,
-  TextInput,
   FlatList,
 } from "react-native"; // We have to import each thing we want to use, un like in React JS where we were able to use the HTML btn without importing it or anything.
 import GoalItem from "./components/GoalItem";
+import GoalInput from "./components/GoalInput";
 
 // {Core Components} -> View, Text, Image, ScrollView, TextInput, FlatList
 export default function App() {
-  const [enteredGoalText, setEnteredGoalText] = useState(""); // Intial State => "" Empty String
   const [courseGoals, setCourseGoals] = useState([]); // Intial State => [] Empty Array
 
-  function goalInputHandler(enteredText) {
-    // console.log(enteredText);
-    setEnteredGoalText(enteredText);
-  }
-
-  function addGoalHandler() {
+  function addGoalHandler(enteredGoalText) {
     // console.log(enteredGoalText);
     // setCourseGoals([...courseGoals, enteredGoalText]); // NOT BEST WAY OF UPDATING STATE because new state is dependent on old state.
     setCourseGoals((currentCourseGoals) => [
@@ -29,15 +22,7 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      {/* 1st View have input area */}
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Your course goal!"
-          onChangeText={goalInputHandler}
-        />
-        <Button title="Add Goal" onPress={addGoalHandler} />
-      </View>
+      <GoalInput onAddGoal={addGoalHandler}/>
       {/* 2nd View is used to view the list of goals that we have entered*/}
       <View style={styles.goalsContainer}>
         {/* <ScrollView> is Component that renders all its components(for eg: 10,000 components) at the starting of loading app, that can lead to performance issue, So, we can use <FlatList> component, it also supports "alwaysBounceVertical" */}
@@ -69,25 +54,6 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingHorizontal: 16,
   },
-
-  inputContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 24,
-    borderBottomWidth: 1,
-    borderColor: "#cccccc",
-  },
-
-  textInput: {
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    width: "70%",
-    marginRight: 8,
-    padding: 8,
-  },
-
   goalsContainer: {
     flex: 4,
   },
