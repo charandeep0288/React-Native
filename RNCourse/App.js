@@ -1,13 +1,12 @@
 import { useState } from "react";
 import {
   StyleSheet,
-  Text,
   View,
   Button,
   TextInput,
-  ScrollView,
   FlatList,
 } from "react-native"; // We have to import each thing we want to use, un like in React JS where we were able to use the HTML btn without importing it or anything.
+import GoalItem from "./components/GoalItem";
 
 // {Core Components} -> View, Text, Image, ScrollView, TextInput, FlatList
 export default function App() {
@@ -49,9 +48,7 @@ export default function App() {
           renderItem={(itemData) => {
             // item is an object, that also contain metadata
             return (
-              <View style={styles.goalItem}>
-                <Text style={styles.goalText}>{itemData.item.text}</Text>
-              </View>
+              <GoalItem />
             );
           }}
           // "keyExtractor" to get a key for each element
@@ -93,16 +90,5 @@ const styles = StyleSheet.create({
 
   goalsContainer: {
     flex: 4,
-  },
-
-  goalItem: {
-    margin: 8,
-    padding: 8,
-    borderRadius: 6,
-    backgroundColor: "#5e0acc",
-  },
-
-  goalText: {
-    color: "white",
   },
 });
