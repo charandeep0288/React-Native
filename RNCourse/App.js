@@ -48,7 +48,7 @@ export default function App() {
           renderItem={(itemData) => {
             // item is an object, that also contain metadata
             return (
-              <GoalItem />
+              <GoalItem text={itemData.item.text}/>
             );
           }}
           // "keyExtractor" to get a key for each element
