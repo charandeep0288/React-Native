@@ -20,6 +20,10 @@ export default function App() {
     ]); // BETTER OR RECOMMENDED WAY TO UPDATING STATE, "currentCourseGoals" would be provided by React
   }
 
+  function deleteGoalHandler() {
+    console.log("Deleted");
+  }
+  
   return (
     <View style={styles.appContainer}>
       <GoalInput onAddGoal={addGoalHandler}/>
@@ -33,7 +37,7 @@ export default function App() {
           renderItem={(itemData) => {
             // item is an object, that also contain metadata
             return (
-              <GoalItem text={itemData.item.text}/>
+              <GoalItem text={itemData.item.text} onDeleteItem={deleteGoalHandler} />
             );
           }}
           // "keyExtractor" to get a key for each element
