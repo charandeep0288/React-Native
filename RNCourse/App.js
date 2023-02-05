@@ -6,9 +6,10 @@ import {
   Button,
   TextInput,
   ScrollView,
+  FlatList,
 } from "react-native"; // We have to import each thing we want to use, un like in React JS where we were able to use the HTML btn without importing it or anything.
 
-// {Core Components} -> View, Text, Image, ScrollView, TextInput
+// {Core Components} -> View, Text, Image, ScrollView, TextInput, FlatList
 export default function App() {
   const [enteredGoalText, setEnteredGoalText] = useState(""); // Intial State => "" Empty String
   const [courseGoals, setCourseGoals] = useState([]); // Intial State => [] Empty Array
@@ -21,7 +22,10 @@ export default function App() {
   function addGoalHandler() {
     // console.log(enteredGoalText);
     // setCourseGoals([...courseGoals, enteredGoalText]); // NOT BEST WAY OF UPDATING STATE because new state is dependent on old state.
-    setCourseGoals((currentCourseGoals) => [...courseGoals, enteredGoalText]); // BETTER OR RECOMMENDED WAY TO UPDATING STATE, "currentCourseGoals" would be provided by React
+    setCourseGoals((currentCourseGoals) => [
+      ...courseGoals,
+      { text: enteredGoalText, key: Math.random().toString() },
+    ]); // BETTER OR RECOMMENDED WAY TO UPDATING STATE, "currentCourseGoals" would be provided by React
   }
 
   return (
@@ -37,19 +41,25 @@ export default function App() {
       </View>
       {/* 2nd View is used to view the list of goals that we have entered*/}
       <View style={styles.goalsContainer}>
-        <ScrollView alwaysBounceVertical={false}>
-          {/* "alwaysBounceVertical" is "bounce effect" on Scroll that is iOS specific */}
-          {courseGoals.map((goal) => (
-            // We added a "<View>" here because we were not getting Rounder Corners in IOS, because React Native in Andriod -> Text Element support that property of "borderRadius" but in IOS.
-            // We are not having text white because we have applied CSS style props to "<View>" instead of <Text>, Unlike CSS in web CSS doesn't cascade in React Native. "Casading" is that the Child element can inherite the CSS of parent element but we don't have this in React Native.
-            <View style={styles.goalItem} key={goal}>
-              <Text style={styles.goalText} key={goal}>
-                {goal}
-                {/* // we can do this because goal is just a string */}
-              </Text>
-            </View>
-          ))}
-        </ScrollView>
+        {/* <ScrollView> is Component that renders all its components(for eg: 10,000 components) at the starting of loading app, that can lead to performance issue, So, we can use <FlatList> component, it also supports "alwaysBounceVertical" */}
+        <FlatList
+          // key property is automatically be applied to the <FlatList> component
+          data={courseGoals}
+          // "renderItem" is responsible to render JSX code
+          renderItem={(itemData) => {
+            // item is an object, that also contain metadata
+            return (
+              <View style={styles.goalItem}>
+                <Text style={styles.goalText}>{itemData.item.text}</Text>
+              </View>
+            );
+          }}
+          // "keyExtractor" to get a key for each element
+          keyExtractor={(item, index) => {
+            return item.id;
+          }}
+          alwaysBounceVertical={false}
+        />
       </View>
     </View>
   );
