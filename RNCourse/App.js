@@ -30,9 +30,16 @@ export default function App() {
       </View>
       {/* 2nd View is used to view the list of goals that we have entered*/}
       <View style={styles.goalsContainer}>
-        {courseGoals.map((goal) => {
-          return <Text key={goal}>{goal}</Text>; // we can do this because goal is just a string
-        })}
+        {courseGoals.map((goal) => (
+          // We added a "<View>" here because we were not getting Rounder Corners in IOS, because React Native in Andriod -> Text Element support that property of "borderRadius" but in IOS.
+          // We are not having text white because we have applied CSS style props to "<View>" instead of <Text>, Unlike CSS in web CSS doesn't cascade in React Native. "Casading" is that the Child element can inherite the CSS of parent element but we don't have this in React Native.
+          <View style={styles.goalItem} key={goal}>
+            <Text style={styles.goalText} key={goal}>
+              {goal}
+              {/* // we can do this because goal is just a string */}
+            </Text>
+          </View>
+        ))}
       </View>
     </View>
   );
@@ -67,4 +74,15 @@ const styles = StyleSheet.create({
   goalsContainer: {
     flex: 4,
   },
+
+  goalItem: {
+    margin: 8,
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: "#5e0acc",
+  },
+
+  goalText: {
+    color: "white",
+  }
 });
