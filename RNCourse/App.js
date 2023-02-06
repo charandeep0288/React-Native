@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  FlatList,
-} from "react-native"; // We have to import each thing we want to use, un like in React JS where we were able to use the HTML btn without importing it or anything.
+import { StyleSheet, View, FlatList } from "react-native"; // We have to import each thing we want to use, un like in React JS where we were able to use the HTML btn without importing it or anything.
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
 
@@ -15,18 +11,22 @@ export default function App() {
     // console.log(enteredGoalText);
     // setCourseGoals([...courseGoals, enteredGoalText]); // NOT BEST WAY OF UPDATING STATE because new state is dependent on old state.
     setCourseGoals((currentCourseGoals) => [
-      ...courseGoals,
-      { text: enteredGoalText, key: Math.random().toString() },
+      ...currentCourseGoals,
+      { text: enteredGoalText, id: Math.random().toString() },
     ]); // BETTER OR RECOMMENDED WAY TO UPDATING STATE, "currentCourseGoals" would be provided by React
   }
 
-  function deleteGoalHandler() {
-    console.log("Deleted");
+  function deleteGoalHandler(id) {
+    // id of to be deleted item
+    // console.log("Deleted");
+    setCourseGoals((currentCourseGoals) => {
+      return currentCourseGoals.filter((goal) => goal.id !== id); // filter itself takes a fn that have to return true or false, if inner function returns true then Item is kept, otherwise Item is droped if returned value is false.
+    });
   }
-  
+
   return (
     <View style={styles.appContainer}>
-      <GoalInput onAddGoal={addGoalHandler}/>
+      <GoalInput onAddGoal={addGoalHandler} />
       {/* 2nd View is used to view the list of goals that we have entered*/}
       <View style={styles.goalsContainer}>
         {/* <ScrollView> is Component that renders all its components(for eg: 10,000 components) at the starting of loading app, that can lead to performance issue, So, we can use <FlatList> component, it also supports "alwaysBounceVertical" */}
@@ -37,11 +37,15 @@ export default function App() {
           renderItem={(itemData) => {
             // item is an object, that also contain metadata
             return (
-              <GoalItem text={itemData.item.text} onDeleteItem={deleteGoalHandler} />
+              <GoalItem
+                text={itemData.item.text}
+                id={itemData.item.id}
+                onDeleteItem={deleteGoalHandler}
+              />
             );
           }}
           // "keyExtractor" to get a key for each element
-          keyExtractor={(item, index) => {
+          keyExtractor={(item, index) => { // it wants a fn as an argument 
             return item.id;
           }}
           alwaysBounceVertical={false}
