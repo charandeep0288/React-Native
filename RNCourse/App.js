@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { StyleSheet, View, FlatList } from "react-native"; // We have to import each thing we want to use, un like in React JS where we were able to use the HTML btn without importing it or anything.
+import { StyleSheet, View, FlatList, Button } from "react-native"; // We have to import each thing we want to use, un like in React JS where we were able to use the HTML btn without importing it or anything.
 import GoalItem from "./components/GoalItem";
 import GoalInput from "./components/GoalInput";
 
 // {Core Components} -> View, Text, Image, ScrollView, TextInput, FlatList
 export default function App() {
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [courseGoals, setCourseGoals] = useState([]); // Intial State => [] Empty Array
+
+  function startAddGoalHandler() {
+    setModalIsVisible(true);
+  }
 
   function addGoalHandler(enteredGoalText) {
     // console.log(enteredGoalText);
@@ -26,7 +31,15 @@ export default function App() {
 
   return (
     <View style={styles.appContainer}>
-      <GoalInput onAddGoal={addGoalHandler} />
+      {/* <Button> doesn't support style props, because btn is prestyled, we don't want to style it too much, If we want to style a btn then we have to create a btn using <Pressable> then style it.  */}
+      <Button
+        title="Add New Goal"
+        color="#5e0acc"
+        onPress={startAddGoalHandler}
+      />
+      {/* this is not prefered way because Modal component have visible props that we can use */}
+      {/* {modalIsVisible && <GoalInput onAddGoal={addGoalHandler} />} */} 
+      <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} />
       {/* 2nd View is used to view the list of goals that we have entered*/}
       <View style={styles.goalsContainer}>
         {/* <ScrollView> is Component that renders all its components(for eg: 10,000 components) at the starting of loading app, that can lead to performance issue, So, we can use <FlatList> component, it also supports "alwaysBounceVertical" */}
@@ -45,7 +58,8 @@ export default function App() {
             );
           }}
           // "keyExtractor" to get a key for each element
-          keyExtractor={(item, index) => { // it wants a fn as an argument 
+          keyExtractor={(item, index) => {
+            // it wants a fn as an argument
             return item.id;
           }}
           alwaysBounceVertical={false}

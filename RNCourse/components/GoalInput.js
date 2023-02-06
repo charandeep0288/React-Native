@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { StyleSheet, View,TextInput, Button } from "react-native";
+import { StyleSheet, View, TextInput, Button, Modal } from "react-native";
 
-function GoalInput(props) { // we can talk to parent component via sending event handler fn using props
+function GoalInput(props) {
+  // we can talk to parent component via sending event handler fn using props
   const [enteredGoalText, setEnteredGoalText] = useState(""); // Intial State => "" Empty String
 
   function goalInputHandler(enteredText) {
@@ -11,21 +12,23 @@ function GoalInput(props) { // we can talk to parent component via sending event
 
   function addGoalHandler() {
     props.onAddGoal(enteredGoalText);
-    setEnteredGoalText(''); // after we have added a Goal, we must clear the input field.
+    setEnteredGoalText(""); // after we have added a Goal, we must clear the input field.
   }
 
   return (
     // {/* 1st View have input area */}
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.textInput}
-        placeholder="Your course goal!"
-        onChangeText={goalInputHandler}
-        value={enteredGoalText}
-        // to get that empty <TextInput> on UI after we added a Goal we must add this value prop with that "enteredGoalText"
-      />
-      <Button title="Add Goal" onPress={addGoalHandler} />
-    </View>
+    <Modal visible={props.visible} animationType="slide">
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="Your course goal!"
+          onChangeText={goalInputHandler}
+          value={enteredGoalText}
+          // to get that empty <TextInput> on UI after we added a Goal we must add this value prop with that "enteredGoalText"
+        />
+        <Button title="Add Goal" onPress={addGoalHandler} />
+      </View>
+    </Modal>
   );
 }
 
