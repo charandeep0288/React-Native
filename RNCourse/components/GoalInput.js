@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { StyleSheet, View, TextInput, Button, Modal } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Button,
+  Modal,
+  Image,
+} from "react-native";
 
 function GoalInput(props) {
   // we can talk to parent component via sending event handler fn using props
@@ -19,6 +26,7 @@ function GoalInput(props) {
     // {/* 1st View have input area */}
     <Modal visible={props.visible} animationType="slide">
       <View style={styles.inputContainer}>
+        <Image style={styles.image} source={require('../assets/images/goal.png')} />
         <TextInput
           style={styles.textInput}
           placeholder="Your course goal!"
@@ -31,7 +39,7 @@ function GoalInput(props) {
             <Button title="Add Goal" onPress={addGoalHandler} />
           </View>
           <View style={styles.button}>
-            <Button title="Cancel" onPress={props.onCancel}/>
+            <Button title="Cancel" onPress={props.onCancel} />
           </View>
         </View>
       </View>
@@ -44,10 +52,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 24,
     padding: 16,
-    borderBottomWidth: 1,
-    borderColor: "#cccccc",
+    backgroundColor: '#311b6b'
+
+  },
+
+  image: {
+    width: 100, 
+    height: 100,
+    margin: 20
   },
 
   textInput: {
@@ -63,9 +76,9 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: '30%',
+    width: "30%",
     marginHorizontal: 8,
-  }
+  },
 });
 
 export default GoalInput;
