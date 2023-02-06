@@ -12,6 +12,10 @@ export default function App() {
     setModalIsVisible(true);
   }
 
+  function endAddGoalHandler() {
+    setModalIsVisible(false);
+  }
+
   function addGoalHandler(enteredGoalText) {
     // console.log(enteredGoalText);
     // setCourseGoals([...courseGoals, enteredGoalText]); // NOT BEST WAY OF UPDATING STATE because new state is dependent on old state.
@@ -19,6 +23,8 @@ export default function App() {
       ...currentCourseGoals,
       { text: enteredGoalText, id: Math.random().toString() },
     ]); // BETTER OR RECOMMENDED WAY TO UPDATING STATE, "currentCourseGoals" would be provided by React
+    // setModalIsVisible(false); // we can do this also here, this is already done in this fn "endAddGoalHandler()"
+    endAddGoalHandler();
   }
 
   function deleteGoalHandler(id) {
@@ -38,8 +44,12 @@ export default function App() {
         onPress={startAddGoalHandler}
       />
       {/* this is not prefered way because Modal component have visible props that we can use */}
-      {/* {modalIsVisible && <GoalInput onAddGoal={addGoalHandler} />} */} 
-      <GoalInput visible={modalIsVisible} onAddGoal={addGoalHandler} />
+      {/* {modalIsVisible && <GoalInput onAddGoal={addGoalHandler} />} */}
+      <GoalInput
+        visible={modalIsVisible}
+        onAddGoal={addGoalHandler}
+        onCancel={endAddGoalHandler}
+      />
       {/* 2nd View is used to view the list of goals that we have entered*/}
       <View style={styles.goalsContainer}>
         {/* <ScrollView> is Component that renders all its components(for eg: 10,000 components) at the starting of loading app, that can lead to performance issue, So, we can use <FlatList> component, it also supports "alwaysBounceVertical" */}
