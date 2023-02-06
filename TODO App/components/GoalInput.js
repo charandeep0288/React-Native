@@ -22,6 +22,9 @@ function GoalInput(props) {
     setEnteredGoalText(""); // after we have added a Goal, we must clear the input field.
   }
 
+  console.log('GoalInput component rendered.'); // Logginng data to check or debug the code
+  console.log(enteredGoalText); // for debugging purpose only
+
   return (
     // {/* 1st View have input area */}
     <Modal visible={props.visible} animationType="slide">
@@ -29,6 +32,7 @@ function GoalInput(props) {
         <Image
           style={styles.image}
           source={require("../assets/images/goal.png")}
+          // source="some/path/of/images.png" // not a god way to define path, we get error, learned how to read error messages
         />
         <TextInput
           style={styles.textInput}
