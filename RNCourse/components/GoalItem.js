@@ -23,6 +23,7 @@ function GoalItem(props) {
 const styles = StyleSheet.create({
   goalItem: {
     margin: 8,
+    marginTop: 20,
     borderRadius: 6,
     backgroundColor: "#5e0acc",
   },
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
   pressedItem: {
     opacity: 0.5
   },
-  
+
   goalText: {
     padding: 8,
     color: "white",
