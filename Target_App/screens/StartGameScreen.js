@@ -18,12 +18,14 @@ function StartGameScreen() {
   );
 }
 
+export default StartGameScreen;
+
 const styles = StyleSheet.create({
   inputContainer: {
     marginTop: 100,
     marginHorizontal: 24,
     padding: 16,
-    backgroundColor: "#76063c",
+    backgroundColor: "#4e0329",
     borderRadius: 8,
     elevation: 4, // to add box shadow in android only
 
@@ -46,4 +48,3 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-export default StartGameScreen;
