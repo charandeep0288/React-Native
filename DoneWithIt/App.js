@@ -1,5 +1,4 @@
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, StyleSheet, Button, Alert } from "react-native";
+import { SafeAreaView, StyleSheet, Button, Alert, StatusBar, Platform } from "react-native";
 
 // View -> UIView
 export default function App() {
@@ -10,10 +9,11 @@ export default function App() {
   const handlePress = () => console.log("Text Clicked!");
 
   return (
-    <SafeAreaView style={styles.container}>
+    // Styles coming from the left most(or last place) array element override the style which might came from the previous style components
+    <SafeAreaView style={[styles.container, containerStyle]}>
+      {/* SafeAreaView only works in iOS */}
       <StatusBar style="auto" />
       <Button
-        color="orange"
         title="Click ME"
         // onPress={() => Alert.alert("My title", "My message", [
         //   {text: "Yes", onPress: () => console.log("Yes")},
@@ -29,12 +29,15 @@ export default function App() {
   );
 }
 
+const containerStyle = { backgroundColor: "orange"};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
+    paddingTop: Platform.OS === "android" ? StatusBar.currnentHeight : 0
   },
 
   textImage: {
