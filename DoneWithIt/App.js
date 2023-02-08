@@ -1,15 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import {
-  SafeAreaView,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  TouchableHighlight,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  View,
-  Text,
-  Image,
-} from "react-native";
+import { SafeAreaView, StyleSheet, Button, Alert } from "react-native";
 
 // View -> UIView
 export default function App() {
@@ -22,24 +12,19 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
-      <Text numberOfLines={1} onPress={handlePress}>
-        app Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti
-        accusamus consequuntur velit quibusdam beatae
-      </Text>
-      <TouchableNativeFeedback onPress={() => console.log("Imaage Tapped")}>
-        {/* TouchableNativeFeedback doesn't work with Images */}
-        <View
-          style={{ width: 200, height: 70, backgroundColor: "dodgerblue" }}
-        ></View>
-        {/* <Image
-          // blurRadius={10}
-          // fadeDuration={2000}
-          style={styles.textImage}
-          source={{
-            uri: "https://picsum.photos/200/300",
-          }}
-        /> */}
-      </TouchableNativeFeedback>
+      <Button
+        color="orange"
+        title="Click ME"
+        // onPress={() => Alert.alert("My title", "My message", [
+        //   {text: "Yes", onPress: () => console.log("Yes")},
+        //   {text: "No",  onPress: () => console.log("No")},
+        // ])}
+
+        onPress={
+          () =>
+            Alert.prompt("My title", "My message", (text) => console.log(text)) // 3rd parameter is callback fn, Only works on iOS for now
+        }
+      ></Button>
     </SafeAreaView>
   );
 }
