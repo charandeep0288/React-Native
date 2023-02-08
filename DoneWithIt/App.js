@@ -6,25 +6,36 @@ import {
   StatusBar,
   Platform,
   View,
-  Dimensions
+  Dimensions,
 } from "react-native";
+import {
+  useDimensions,
+  useDeviceOrientation,
+} from "@react-native-community/hooks";
 
 // View -> UIView
 export default function App() {
   let x = 1;
+  // console.log(useDimensions());
+  const landscape = useDeviceOrientation() === "landscape";
+  console.log(landscape);
 
-  console.log(Dimensions.get("screen"));
-  
+  // console.log(Dimensions.get("screen"));
+
   // console.log("App executed");
   // console.log(require("./assets/icon.png")); // returns a number that is refernce to ower <Image>
   const handlePress = () => console.log("Text Clicked!");
 
   return (
     // Styles coming from the left most(or last place) array element override the style which might came from the previous style components
-    <SafeAreaView style={[styles.container, containerStyle]}>
+    <SafeAreaView style={[styles.container]}>
       {/* SafeAreaView only works in iOS */}
       <View
-        style={{ backgroundColor: "dodgerblue", width: "50%", height: 70 }}
+        style={{
+          backgroundColor: "dodgerblue",
+          width: "100%",
+          height: landscape ? "100%" : "30%",
+        }}
       ></View>
     </SafeAreaView>
   );
