@@ -1,20 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text } from 'react-native';
 
+// View -> UIView 
 export default function App() {
+  let x = 1;
+
+  console.log("App executed");
+
+  const handlePress = () => console.log("Text Clicked!");
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <SafeAreaView style={styles.container}>
+      <Text numberOfLines={1} onPress={handlePress}> app Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti accusamus consequuntur velit quibusdam beatae</Text>
       <StatusBar style="auto" />
-    </View>
-  );
+    </SafeAreaView>
+  ); 
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'dodgerblue',
     alignItems: 'center',
     justifyContent: 'center',
   },
 });
+
+
+// App URL
+// exp://exp.host/@charandeep2000/DoneWithIt?release-channel=default
