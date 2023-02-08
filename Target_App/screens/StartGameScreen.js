@@ -12,8 +12,15 @@ function StartGameScreen() {
         autoCorrect={false} // we don't want autoCorrect or autoCapitalize functionality here.
       />
       {/* BUTTONS - going to create custom button using <View> */}
-      <PrimaryButton>Reset</PrimaryButton>
-      <PrimaryButton>Confirm</PrimaryButton>
+      <View style={styles.buttonsContainer}>
+        {/* Every <View> create a FlexBox container */}
+        <View style={styles.buttonContainer}>
+          <PrimaryButton>Reset</PrimaryButton>
+        </View>
+        <View style={styles.buttonContainer}>
+          <PrimaryButton>Confirm</PrimaryButton>
+        </View>
+      </View>
     </View>
   );
 }
@@ -27,6 +34,8 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#4e0329",
     borderRadius: 8,
+    // justifyContent: "center",
+    alignItems: "center",
     elevation: 4, // to add box shadow in android only
 
     // to add box shadow in iOS, we have to do these things
@@ -47,4 +56,12 @@ const styles = StyleSheet.create({
     bold: 8,
     textAlign: "center",
   },
+
+  buttonsContainer: {
+    flexDirection: "row",
+  },
+
+  buttonContainer: {
+    flex: 1,
+  }
 });
