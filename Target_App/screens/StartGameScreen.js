@@ -1,7 +1,19 @@
+import { useState } from "react";
 import { StyleSheet, View, TextInput } from "react-native";
 import PrimaryButton from "../components/PrimaryButton";
 
 function StartGameScreen() {
+
+  const [enteredNumber, setEnteredNumber] = useState(""); // we get value as string not number
+
+  function numberInputHandler(enteredNumber) {
+    setEnteredNumber(enteredNumber);
+  }
+
+  function confirmInputHandler() {
+
+  }
+
   return (
     <View style={styles.inputContainer}>
       <TextInput
@@ -10,12 +22,14 @@ function StartGameScreen() {
         keyboardType="number-pad"
         autoCapitalize="none"
         autoCorrect={false} // we don't want autoCorrect or autoCapitalize functionality here.
+        onChangeText={numberInputHandler}
+        value={enteredNumber}
       />
       {/* BUTTONS - going to create custom button using <View> */}
       <View style={styles.buttonsContainer}>
         {/* Every <View> create a FlexBox container */}
         <View style={styles.buttonContainer}>
-          <PrimaryButton>Reset</PrimaryButton>
+          <PrimaryButton onPressProp={confirmInputHandler}>Reset</PrimaryButton>
         </View>
         <View style={styles.buttonContainer}>
           <PrimaryButton>Confirm</PrimaryButton>
