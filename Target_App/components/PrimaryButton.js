@@ -1,5 +1,7 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 
+import Colors from "../constants/colors";
+
 function PrimaryButton({ children, onPressProp }) {
   function pressHandler() {
     // console.log("Pressed!");
@@ -16,7 +18,7 @@ function PrimaryButton({ children, onPressProp }) {
             : styles.buttonInnerContainer
         } // (did styling like this because We wanted Ripple effect on iOS).
         onPress={onPressProp}
-        android_ripple={{ color: "#640233" }} // only on android
+        android_ripple={{ color: Colors.primary600 }} // only on android
       >
         <Text style={styles.buttonText}>{children}</Text>
       </Pressable>
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
   },
 
   buttonInnerContainer: {
-    backgroundColor: "#72063c",
+    backgroundColor: Colors.primary500,
     paddingVertical: 8,
     paddingHorizontal: 16,
     elevation: 2, // to add box shadow in android only

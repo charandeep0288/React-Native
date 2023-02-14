@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 
-import Title from "../components/title";
+import Title from "../components/Title";
 
 function GameScreen() {
   return (
