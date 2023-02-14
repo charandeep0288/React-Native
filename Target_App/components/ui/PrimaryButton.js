@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, Pressable } from "react-native";
 
-import Colors from "../constants/colors";
+import Colors from "../../constants/colors";
 
 function PrimaryButton({ children, onPressProp }) {
   function pressHandler() {
@@ -12,9 +12,11 @@ function PrimaryButton({ children, onPressProp }) {
     // onPress takes a function that is called when pressed on this component
     <View style={styles.buttonOuterContainer}>
       <Pressable
-        style={({ pressed }) => // pressed is boolean
+        style={(
+          { pressed } // pressed is boolean
+        ) =>
           pressed
-            ? [styles.buttonInnerContainer, styles.pressed] // sending array of styles  
+            ? [styles.buttonInnerContainer, styles.pressed] // sending array of styles
             : styles.buttonInnerContainer
         } // (did styling like this because We wanted Ripple effect on iOS).
         onPress={onPressProp}

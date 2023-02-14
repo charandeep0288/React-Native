@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, View, TextInput, Alert } from "react-native";
-import PrimaryButton from "../components/PrimaryButton";
+import PrimaryButton from "../components/ui/PrimaryButton";
 import Colors from "../constants/colors";
 
 function StartGameScreen({ onPickNumber }) {
@@ -50,7 +50,9 @@ function StartGameScreen({ onPickNumber }) {
           <PrimaryButton onPressProp={resetInputHandler}>Reset</PrimaryButton>
         </View>
         <View style={styles.buttonContainer}>
-          <PrimaryButton onPressProp={confirmInputHandler}>Confirm</PrimaryButton>
+          <PrimaryButton onPressProp={confirmInputHandler}>
+            Confirm
+          </PrimaryButton>
         </View>
       </View>
     </View>
