@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { View, StyleSheet, Alert } from "react-native";
+import { Ionicons } from "@expo/vector-icons"; // we can use Icons in app using this
 
 import NumberContainer from "../components/game/NumberContainer";
 import Card from "../components/ui/Card";
@@ -70,13 +71,13 @@ function GameScreen({ userNumber, onGameOver }) {
           {/* - */}
           <View style={styles.buttonContainer}>
             <PrimaryButton onPressProp={nextGuessHandler.bind(this, "lower")}>
-              -
+              <Ionicons name="md-remove" size={24} color="white" />
             </PrimaryButton>
           </View>
           {/* +  */}
           <View style={styles.buttonContainer}>
             <PrimaryButton onPressProp={nextGuessHandler.bind(this, "greater")}>
-              +
+              <Ionicons name="md-add" size={24} color="white" />
             </PrimaryButton>
           </View>
         </View>
