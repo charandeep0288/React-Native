@@ -31,8 +31,9 @@ export default function App() {
     setGameIsOver(false); // we want to state that game has started, instead of Game is Over.
   }
 
-  function gameOverHandler() {
+  function gameOverHandler(numberOfRounds) {
     setGameIsOver(true);
+    setGuessRounds(numberOfRounds);
   }
 
   function startNewGameScreen() {

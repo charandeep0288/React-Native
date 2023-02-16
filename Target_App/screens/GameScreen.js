@@ -30,7 +30,7 @@ function GameScreen({ userNumber, onGameOver }) {
 
   useEffect(() => {
     if (currentGuess === userNumber) {
-      onGameOver();
+      onGameOver(guessRounds.length);
     }
   }, [currentGuess, userNumber, onGameOver]); // we want this useEffect() to work in the cases [currentGuess, userNumber, onGameOver], if any change happen in any of these values or fn.
 
@@ -93,7 +93,7 @@ function GameScreen({ userNumber, onGameOver }) {
           </View>
         </View>
       </Card>
-      <View>
+      <View style={styles.listContainer}>
         {/* LOG ROUNDS */}
         {/* It also would have been ok to traverse over the list like this because we know that we are not going to go over 10 or 12 list items */}
         {/* {guessRounds.map((guessRound) => (
@@ -145,4 +145,9 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1,
   },
+
+  listContainer: {
+    flex: 1,
+    padding: 16,
+  }
 });
