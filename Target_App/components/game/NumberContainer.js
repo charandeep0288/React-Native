@@ -13,18 +13,19 @@ function NumberContainer({ children }) {
 export default NumberContainer;
 
 const styles = StyleSheet.create({
-    container: {
-        borderWidth: 4,
-        borderColor: Colors.accent500,
-        padding: 24,
-        margin: 24,
-        borderRadius: 8, // "borderRadius" not supported on <Text> element
-        alignItems: "center",
-        justifyContent: "center", 
-    },
-    numberText: {
-        color: Colors.accent500,
-        fontSize: 36,
-        fontWeight: "bold",
-    }
-})
+  container: {
+    borderWidth: 4,
+    borderColor: Colors.accent500,
+    padding: 24,
+    margin: 24,
+    borderRadius: 8, // "borderRadius" not supported on <Text> element
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  numberText: {
+    color: Colors.accent500,
+    fontSize: 36,
+    // fontWeight: "bold",
+    fontFamily: "open-sans-bold",
+  },
+});

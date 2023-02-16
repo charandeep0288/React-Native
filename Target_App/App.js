@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { StyleSheet, ImageBackground, SafeAreaView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFonts } from "expo-font"; // we can use useFonts hook
+import AppLoading from "expo-app-loading";
 
 import StartGameScreen from "./screens/StartGameScreen";
 import GameScreen from "./screens/GameScreen";
@@ -11,6 +13,16 @@ export default function App() {
   const [userNumber, setUserNumber] = useState(); // Inital value is "null" or "undefined"
   const [gameIsOver, setGameIsOver] = useState(true);
 
+  // fontLoaded -> first argument is a boolean value
+  const [fontLoaded] = useFonts({
+    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
+    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
+  }); // we specify fonts we want to use in this object of "useFonts" hook
+
+  if(!fontLoaded) {
+    return <AppLoading />
+  }
+  
   function pickedNumberHandler(pickedNumber) {
     // these 2 state update would be batched together by React and reload the component only once not twice 
     setUserNumber(pickedNumber);
@@ -40,7 +52,7 @@ export default function App() {
       style={styles.rootScreen}
     >
       <ImageBackground
-        source={require("./assets/background.png")}
+        source={require("./assets/images/background.png")}
         resizeMode="cover"
         style={styles.rootScreen}
         imageStyle={styles.backgroundImage}
