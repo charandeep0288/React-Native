@@ -21,11 +21,7 @@ let minBoundary = 1;
 let maxBoundary = 100;
 
 function GameScreen({ userNumber, onGameOver }) {
-  const intialGuess = generateRandomBetween(
-    1,
-    100, 
-    userNumber
-  ); //  we were getting into the infinite loop that's why we hard coded this "minBoundary" & "maxBoundary" values OR we could have used useMemo hook of React.
+  const intialGuess = generateRandomBetween(1, 100, userNumber); //  we were getting into the infinite loop that's why we hard coded this "minBoundary" & "maxBoundary" values OR we could have used useMemo hook of React.
   // console.log(userNumber);
   const [currentGuess, setCurrentGuess] = useState(intialGuess);
 
@@ -67,16 +63,22 @@ function GameScreen({ userNumber, onGameOver }) {
       {/* GUESS  */}
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card>
-        <InstructionText>Higher or lower ?</InstructionText>
-        <View>
+        <InstructionText style={styles.instructionText}>
+          Higher or lower ?
+        </InstructionText>
+        <View style={styles.buttonsContainer}>
           {/* - */}
-          <PrimaryButton onPressProp={nextGuessHandler.bind(this, "lower")}>
-            -
-          </PrimaryButton>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPressProp={nextGuessHandler.bind(this, "lower")}>
+              -
+            </PrimaryButton>
+          </View>
           {/* +  */}
-          <PrimaryButton onPressProp={nextGuessHandler.bind(this, "greater")}>
-            +
-          </PrimaryButton>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPressProp={nextGuessHandler.bind(this, "greater")}>
+              +
+            </PrimaryButton>
+          </View>
         </View>
       </Card>
       <View>{/* LOG ROUNDS */}</View>
@@ -90,5 +92,17 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 40,
+  },
+
+  instructionText: {
+    marginBottom: 12,
+  },
+
+  buttonsContainer: {
+    flexDirection: "row",
+  },
+
+  buttonContainer: {
+    flex: 1,
   },
 });
