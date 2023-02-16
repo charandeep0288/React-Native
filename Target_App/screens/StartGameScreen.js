@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { StyleSheet, View, TextInput, Alert } from "react-native";
 import PrimaryButton from "../components/ui/PrimaryButton";
+import Title from "../components/ui/Title";
 import Colors from "../constants/colors";
+import Card from "../components/ui/Card";
+import InstructionText from "../components/ui/InstructionText";
 
 function StartGameScreen({ onPickNumber }) {
   const [enteredNumber, setEnteredNumber] = useState(""); // we get value as string not number
@@ -33,28 +36,32 @@ function StartGameScreen({ onPickNumber }) {
   }
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.numberInput}
-        maxLength={2}
-        keyboardType="number-pad"
-        autoCapitalize="none"
-        autoCorrect={false} // we don't want autoCorrect or autoCapitalize functionality here.
-        onChangeText={numberInputHandler}
-        value={enteredNumber}
-      />
-      {/* BUTTONS - going to create custom button using <View> */}
-      <View style={styles.buttonsContainer}>
-        {/* Every <View> create a FlexBox container */}
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPressProp={resetInputHandler}>Reset</PrimaryButton>
+    <View style={styles.rootContainer}>
+      <Title>Guess My Number</Title>
+      <Card>
+        <InstructionText>Enter a Number</InstructionText>
+        <TextInput
+          style={styles.numberInput}
+          maxLength={2}
+          keyboardType="number-pad"
+          autoCapitalize="none"
+          autoCorrect={false} // we don't want autoCorrect or autoCapitalize functionality here.
+          onChangeText={numberInputHandler}
+          value={enteredNumber}
+        />
+        {/* BUTTONS - going to create custom button using <View> */}
+        <View style={styles.buttonsContainer}>
+          {/* Every <View> create a FlexBox container */}
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPressProp={resetInputHandler}>Reset</PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPressProp={confirmInputHandler}>
+              Confirm
+            </PrimaryButton>
+          </View>
         </View>
-        <View style={styles.buttonContainer}>
-          <PrimaryButton onPressProp={confirmInputHandler}>
-            Confirm
-          </PrimaryButton>
-        </View>
-      </View>
+      </Card>
     </View>
   );
 }
@@ -62,21 +69,10 @@ function StartGameScreen({ onPickNumber }) {
 export default StartGameScreen;
 
 const styles = StyleSheet.create({
-  inputContainer: {
+  rootContainer: {
+    flex: 1,
     marginTop: 100,
-    marginHorizontal: 24,
-    padding: 16,
-    backgroundColor: Colors.primary800,
-    borderRadius: 8,
-    // justifyContent: "center",
     alignItems: "center",
-    elevation: 4, // to add box shadow in android only
-
-    // to add box shadow in iOS, we have to do these things
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    shadowOpacity: 0.25,
   },
 
   numberInput: {
