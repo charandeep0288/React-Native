@@ -19,7 +19,7 @@ export default function App() {
     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
   }); // we specify fonts we want to use in this object of "useFonts" hook
 
-  if(!fontLoaded) {
+  if(!fontLoaded) { //  we checking its value if false then we get a loading screen (but deprecated now)
     return <AppLoading />
   }
   
