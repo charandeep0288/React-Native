@@ -39,7 +39,7 @@ export default function App() {
 
   return (
     <>
-      <StatusBar style="light"/>
+      <StatusBar style="light" />
       <View style={styles.appContainer}>
         {/* <Button> doesn't support style props, because btn is prestyled, we don't want to style it too much, If we want to style a btn then we have to create a btn using <Pressable> then style it.  */}
         <Button
@@ -59,6 +59,7 @@ export default function App() {
           {/* <ScrollView> is Component that renders all its components(for eg: 10,000 components) at the starting of loading app, that can lead to performance issue, So, we can use <FlatList> component, it also supports "alwaysBounceVertical" */}
           <FlatList
             // key property is automatically be applied to the <FlatList> component
+            // data prop that points to the array that holds the data should be output
             data={courseGoals}
             // "renderItem" is responsible to render JSX code
             renderItem={(itemData) => {
@@ -71,6 +72,7 @@ export default function App() {
                 />
               );
             }}
+            // "keyExtractor" will look for key in the "data" object, but it won't find that because that data is not a key. Hence tell <FlatList> how drive the key using "keyExtractor"
             // "keyExtractor" to get a key for each element
             keyExtractor={(item, index) => {
               // it wants a fn as an argument

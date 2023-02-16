@@ -93,15 +93,24 @@ function GameScreen({ userNumber, onGameOver }) {
       <View>
         {/* LOG ROUNDS */}
         {/* It also would have been ok to traverse over the list like this because we know that we are not going to go over 10 or 12 list items */}
-        {guessRounds.map((guessRound) => (
+        {/* {guessRounds.map((guessRound) => (
           <Text
             // We can use the "guessRound" as a key because how logic we have written i.e, we can't guess the same number twice
             key={guessRound}
           >
             {guessRound}
           </Text>
-        ))}
-
+        ))} */}
+        <FlatList
+          // key property is automatically be applied to the <FlatList> component
+          // data prop that points to the array that holds the data should be output
+          data={guessRounds}
+          renderItem={(itemData) => {
+            return <Text>{itemData.item}</Text>;
+          }}
+          // "keyExtractor" will look for key in the "data" object, but it won't find that because that data is not a key. Hence tell <FlatList> how drive the key using "keyExtractor"
+          keyExtractor={(item) => item}
+        ></FlatList>
       </View>
     </View>
   );
