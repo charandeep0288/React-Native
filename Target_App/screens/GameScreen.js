@@ -7,6 +7,7 @@ import Card from "../components/ui/Card";
 import InstructionText from "../components/ui/InstructionText";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Title from "../components/ui/Title";
+import GuessLogItem from "../components/game/GuessLogItem";
 
 function generateRandomBetween(min, max, exclude) {
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -66,6 +67,8 @@ function GameScreen({ userNumber, onGameOver }) {
     setGuessRounds((prevGuessRounds) => [newRandomNumber, ...prevGuessRounds]);
   }
 
+  const guessRoundListLength = guessRounds.length;
+
   return (
     <View style={styles.screen}>
       <Title>Opponent's Guess</Title>
@@ -106,7 +109,14 @@ function GameScreen({ userNumber, onGameOver }) {
           // data prop that points to the array that holds the data should be output
           data={guessRounds}
           renderItem={(itemData) => {
-            return <Text>{itemData.item}</Text>;
+            return (
+              <GuessLogItem
+                roundNumber={guessRoundListLength - itemData.index}
+                guess={itemData.item}
+              >
+                {itemData.item}
+              </GuessLogItem>
+            );
           }}
           // "keyExtractor" will look for key in the "data" object, but it won't find that because that data is not a key. Hence tell <FlatList> how drive the key using "keyExtractor"
           keyExtractor={(item) => item}
