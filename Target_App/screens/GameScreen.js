@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
 
 import NumberContainer from "../components/game/NumberContainer";
@@ -18,14 +18,20 @@ function generateRandomBetween(min, max, exclude) {
 let minBoundary = 1;
 let maxBoundary = 100;
 
-function GameScreen({ userNumber }) {
+function GameScreen({ userNumber, onGameOver }) {
   const intialGuess = generateRandomBetween(
-    minBoundary,
-    maxBoundary,
+    1,
+    100, 
     userNumber
-  );
+  ); //  we were getting into the infinite loop that's why we hard coded this "minBoundary" & "maxBoundary" values OR we could have used useMemo hook of React.
   // console.log(userNumber);
   const [currentGuess, setCurrentGuess] = useState(intialGuess);
+
+  useEffect(() => {
+    if (currentGuess === userNumber) {
+      onGameOver();
+    }
+  }, [currentGuess, userNumber, onGameOver]); // we want this useEffect() to work in the cases [currentGuess, userNumber, onGameOver], if any change happen in any of these values or fn.
 
   function nextGuessHandler(direction) {
     // direction => 'lower', 'greater'
@@ -34,7 +40,7 @@ function GameScreen({ userNumber }) {
       (direction === "greater" && currentGuess > userNumber)
     ) {
       Alert.alert("Don't lie!", "You know that this is wrong....", [
-        { text: "Sorry", style: "cancel"},
+        { text: "Sorry", style: "cancel" },
       ]);
       return;
     }
