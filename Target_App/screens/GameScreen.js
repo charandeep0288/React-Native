@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Alert, Text, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons"; // we can use Icons in app using this
 
 import NumberContainer from "../components/game/NumberContainer";
@@ -14,17 +14,18 @@ function generateRandomBetween(min, max, exclude) {
   if (rndNum === exclude) {
     return generateRandomBetween(min, max, exclude);
   } else {
-    return rndNum; 
+    return rndNum;
   }
 }
 
 let minBoundary = 1;
 let maxBoundary = 100;
 
-function GameScreen({ userNumber, onGameOver }) { 
+function GameScreen({ userNumber, onGameOver }) {
   const intialGuess = generateRandomBetween(1, 100, userNumber); //  we were getting into the infinite loop that's why we hard coded this "minBoundary" & "maxBoundary" values OR we could have used useMemo hook of React.
   // console.log(userNumber);
   const [currentGuess, setCurrentGuess] = useState(intialGuess);
+  const [guessRounds, setGuessRounds] = useState([intialGuess]); // store all the rounds that system guess in an array.
 
   useEffect(() => {
     if (currentGuess === userNumber) {
@@ -62,6 +63,7 @@ function GameScreen({ userNumber, onGameOver }) {
       currentGuess
     );
     setCurrentGuess(newRandomNumber);
+    setGuessRounds((prevGuessRounds) => [newRandomNumber, ...prevGuessRounds]);
   }
 
   return (
@@ -88,7 +90,19 @@ function GameScreen({ userNumber, onGameOver }) {
           </View>
         </View>
       </Card>
-      <View>{/* LOG ROUNDS */}</View>
+      <View>
+        {/* LOG ROUNDS */}
+        {/* It also would have been ok to traverse over the list like this because we know that we are not going to go over 10 or 12 list items */}
+        {guessRounds.map((guessRound) => (
+          <Text
+            // We can use the "guessRound" as a key because how logic we have written i.e, we can't guess the same number twice
+            key={guessRound}
+          >
+            {guessRound}
+          </Text>
+        ))}
+
+      </View>
     </View>
   );
 }
