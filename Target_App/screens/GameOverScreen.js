@@ -4,7 +4,7 @@ import Title from "../components/ui/Title";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Colors from "../constants/colors";
 
-function GameOverScreen() {
+function GameOverScreen({ roundsNumber, userNumber, onStartNewGame }) {
   return (
     <View style={styles.rootContainer}>
       <Title>GAME OVER!</Title>
@@ -18,12 +18,14 @@ function GameOverScreen() {
       {/* <Text> component in a <Text> component, inner or nested <Text> component recieve the styles we have defined in the outer <Text> component */}
       {/*And when we have <Text> component in a <View> component, inner <Text> component doesn't recieve the styles we have defined in the outer <View> component */}
       <Text style={styles.summaryText}>
-        Your phone needed <Text style={styles.highlight}>X</Text> rounds to
-        guess the number
-        <Text style={styles.highlight}>Y</Text>.
+        Your phone needed <Text style={styles.highlight}>{roundsNumber}</Text>{" "}
+        rounds to guess the number
+        <Text style={styles.highlight}> {userNumber}</Text>.
       </Text>
       <View>
-        <PrimaryButton>Start New Game</PrimaryButton>
+        <PrimaryButton onPressProp={onStartNewGame}>
+          Start New Game
+        </PrimaryButton>
       </View>
     </View>
   );

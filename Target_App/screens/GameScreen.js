@@ -21,7 +21,7 @@ function generateRandomBetween(min, max, exclude) {
 let minBoundary = 1;
 let maxBoundary = 100;
 
-function GameScreen({ userNumber, onGameOver }) {
+function GameScreen({ userNumber, onGameOver }) { 
   const intialGuess = generateRandomBetween(1, 100, userNumber); //  we were getting into the infinite loop that's why we hard coded this "minBoundary" & "maxBoundary" values OR we could have used useMemo hook of React.
   // console.log(userNumber);
   const [currentGuess, setCurrentGuess] = useState(intialGuess);
@@ -31,6 +31,12 @@ function GameScreen({ userNumber, onGameOver }) {
       onGameOver();
     }
   }, [currentGuess, userNumber, onGameOver]); // we want this useEffect() to work in the cases [currentGuess, userNumber, onGameOver], if any change happen in any of these values or fn.
+
+  useEffect(() => {
+    // Could have also set the values in the above "useEffect()" where we have "onGameOver" fn because we know that game is over.
+    minBoundary = 1;
+    maxBoundary = 100;
+  }, []); // this useEffect() would work only when we have rendered this component for the first time each time, not for the case where any state changes and this component re-renders
 
   function nextGuessHandler(direction) {
     // direction => 'lower', 'greater'

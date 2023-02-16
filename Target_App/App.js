@@ -12,6 +12,7 @@ import Colors from "./constants/colors";
 export default function App() {
   const [userNumber, setUserNumber] = useState(); // Inital value is "null" or "undefined"
   const [gameIsOver, setGameIsOver] = useState(true);
+  const [guessRounds, setGuessRounds] = useState(0); // Inital value is "0" because we have not started game yet
 
   // fontLoaded -> first argument is a boolean value
   const [fontLoaded] = useFonts({
@@ -19,18 +20,25 @@ export default function App() {
     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
   }); // we specify fonts we want to use in this object of "useFonts" hook
 
-  if(!fontLoaded) { //  we checking its value if false then we get a loading screen (but deprecated now)
-    return <AppLoading />
+  if (!fontLoaded) {
+    //  we checking its value if false then we get a loading screen (but deprecated now)
+    return <AppLoading />;
   }
-  
+
   function pickedNumberHandler(pickedNumber) {
-    // these 2 state update would be batched together by React and reload the component only once not twice 
+    // these 2 state update would be batched together by React and reload the component only once not twice
     setUserNumber(pickedNumber);
     setGameIsOver(false); // we want to state that game has started, instead of Game is Over.
   }
 
   function gameOverHandler() {
     setGameIsOver(true);
+  }
+
+  function startNewGameScreen() {
+    setUserNumber(null); // by setting "userNumber" to "null" we make sure that these 2 if conditions to render GameScreen OR GameOverScreen don't get resolved to "true".
+    // setGameIsOver(true); // we have done this in the above fn that's why we don't have to do this here.
+    setGuessRounds(0);
   }
 
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
@@ -42,7 +50,13 @@ export default function App() {
   }
 
   if (gameIsOver && userNumber) {
-    screen = <GameOverScreen />;
+    screen = (
+      <GameOverScreen
+        userNumber={userNumber}
+        roundsNumber={guessRounds}
+        onStartNewGame={startNewGameScreen}
+      />
+    );
   }
 
   return (
