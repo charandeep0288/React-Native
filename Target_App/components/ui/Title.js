@@ -1,11 +1,7 @@
-import { Text, StyleSheet, useWindowDimensions } from "react-native";
+import { Text, StyleSheet } from "react-native";
 
 function Title({ children }) {
-  const { width, height } = useWindowDimensions();
-  
-  const textFontSize = height < 365 ? 18 : 22;
-
-  return <Text style={[styles.title, {fontSize: textFontSize}]}>{children}</Text>;
+  return <Text style={styles.title}>{children}</Text>;
 }
 
 export default Title;

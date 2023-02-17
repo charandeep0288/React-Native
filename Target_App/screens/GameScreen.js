@@ -78,13 +78,10 @@ function GameScreen({ userNumber, onGameOver }) {
 
   const guessRoundListLength = guessRounds.length;
   const marginTopDistance = height < 365 ? 0 : 10;
-
-  return (
-    <View style={[styles.screen, { marginTop: marginTopDistance }]}>
-      <Title>Opponent's Guess</Title>
-      {/* GUESS  */}
+  let content = (
+    <>
       <NumberContainer>{currentGuess}</NumberContainer>
-      <Card isGameScreen={true}>
+      <Card>
         <InstructionText style={styles.instructionText}>
           Higher or lower ?
         </InstructionText>
@@ -103,6 +100,36 @@ function GameScreen({ userNumber, onGameOver }) {
           </View>
         </View>
       </Card>
+    </>
+  );
+
+  if (width > 500) {
+    content = (
+      <>
+        <View style={styles.buttonContainersWide}>
+          {/* - */}
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPressProp={nextGuessHandler.bind(this, "lower")}>
+              <Ionicons name="md-remove" size={24} color="white" />
+            </PrimaryButton>
+          </View>
+          <NumberContainer>{currentGuess}</NumberContainer>
+          {/* +  */}
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPressProp={nextGuessHandler.bind(this, "greater")}>
+              <Ionicons name="md-add" size={24} color="white" />
+            </PrimaryButton>
+          </View>
+        </View>
+      </>
+    );
+  }
+
+  return (
+    <View style={[styles.screen, { marginTop: marginTopDistance }]}>
+      <Title>Opponent's Guess</Title>
+      {/* GUESS  */}
+      {content}
       <View style={styles.listContainer}>
         {/* LOG ROUNDS */}
         {/* It also would have been ok to traverse over the list like this because we know that we are not going to go over 10 or 12 list items */}
@@ -151,6 +178,11 @@ const styles = StyleSheet.create({
 
   buttonsContainer: {
     flexDirection: "row",
+  },
+
+  buttonContainersWide: {
+    flexDirection: "row",
+    alignItems: "center",
   },
 
   buttonContainer: {

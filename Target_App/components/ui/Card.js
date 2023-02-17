@@ -1,21 +1,8 @@
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  useWindowDimensions,
-} from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import Colors from "../../constants/colors";
 
-function Card({ children, isGameScreen }) {
-  const { width, height } = useWindowDimensions();
-
-  const marginDistance = height < 365 ? 10 : isGameScreen ? 3 : 36;
-  const marginDistance0 = width < 380 ? 10 : 36;
-  // console.log(width + " " + height);
-
-  return (
-    <View style={[styles.card, { marginTop: marginDistance }]}>{children}</View>
-  );
+function Card({ children }) {
+  return <View style={styles.card}>{children}</View>;
 }
 
 export default Card;
