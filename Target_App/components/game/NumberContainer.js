@@ -1,18 +1,29 @@
-import { View, Text, StyleSheet, Dimensions } from "react-native"; // "Dimensions" is an API build into react-native
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  useWindowDimensions,
+} from "react-native"; // "Dimensions" is an API build into react-native
 
 import Colors from "../../constants/colors";
 
 function NumberContainer({ children }) {
+  const { width, height } = useWindowDimensions();
+
+  const paddingMarginDistance = height < 365 ? 10 : 20;
+  const numberFontSize = height < 365 ? 20 : 28;
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.numberText}>{children}</Text>
+    <View style={[styles.container, {margin: paddingMarginDistance, padding: paddingMarginDistance}]}>
+      <Text style={[styles.numberText, {fontSize: numberFontSize}]}>{children}</Text>
     </View>
   );
 }
 
 export default NumberContainer;
 
-const deviceWidth = Dimensions.get("window").width; // we can give 2 values here -> "screen" or "window", For Android "screen" is width and height of screen + StatusBar & "window" is excluding the StatusBar,but for iOS there no difference btw screen or window, 
+const deviceWidth = Dimensions.get("window").width; // we can give 2 values here -> "screen" or "window", For Android "screen" is width and height of screen + StatusBar & "window" is excluding the StatusBar,but for iOS there no difference btw screen or window,
 
 const styles = StyleSheet.create({
   container: {
@@ -28,6 +39,6 @@ const styles = StyleSheet.create({
     color: Colors.accent500,
     fontSize: deviceWidth < 380 ? 24 : 36,
     // fontWeight: "bold",
-    fontFamily: "open-sans-bold", 
+    fontFamily: "open-sans-bold",
   },
 });

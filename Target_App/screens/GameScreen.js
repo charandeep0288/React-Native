@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { View, StyleSheet, Alert, Text, FlatList } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Alert,
+  Text,
+  FlatList,
+  useWindowDimensions,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons"; // we can use Icons in app using this
 
 import NumberContainer from "../components/game/NumberContainer";
@@ -27,6 +34,8 @@ function GameScreen({ userNumber, onGameOver }) {
   // console.log(userNumber);
   const [currentGuess, setCurrentGuess] = useState(intialGuess);
   const [guessRounds, setGuessRounds] = useState([intialGuess]); // store all the rounds that system guess in an array.
+
+  const { width, height } = useWindowDimensions();
 
   useEffect(() => {
     if (currentGuess === userNumber) {
@@ -68,13 +77,14 @@ function GameScreen({ userNumber, onGameOver }) {
   }
 
   const guessRoundListLength = guessRounds.length;
+  const marginTopDistance = height < 365 ? 0 : 10;
 
   return (
-    <View style={styles.screen}>
+    <View style={[styles.screen, { marginTop: marginTopDistance }]}>
       <Title>Opponent's Guess</Title>
       {/* GUESS  */}
       <NumberContainer>{currentGuess}</NumberContainer>
-      <Card>
+      <Card isGameScreen={true}>
         <InstructionText style={styles.instructionText}>
           Higher or lower ?
         </InstructionText>
@@ -133,7 +143,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 40,
     alignItems: "center",
-    
   },
 
   instructionText: {
@@ -151,5 +160,5 @@ const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
     padding: 16,
-  }
+  },
 });

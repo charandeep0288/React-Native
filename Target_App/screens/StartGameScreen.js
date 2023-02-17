@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { StyleSheet, View, TextInput, Alert } from "react-native";
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Alert,
+  Dimensions,
+  useWindowDimensions,
+} from "react-native"; // "useWindowDimensions" is a hook
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Title from "../components/ui/Title";
 import Colors from "../constants/colors";
@@ -8,6 +15,9 @@ import InstructionText from "../components/ui/InstructionText";
 
 function StartGameScreen({ onPickNumber }) {
   const [enteredNumber, setEnteredNumber] = useState(""); // we get value as string not number
+
+  // If we want to adjust somethings on UI based on orientation(dynamic changing sizes) then it is prefered to use this hook, instead of doing changes in StyleSheets.
+  const { width, height } = useWindowDimensions(); // returns a object, internally this hook watches the device dimensions and then when ever they change(eg: rotate the device ) -> this fn component will execute again & we get updated width & height
 
   function numberInputHandler(enteredNumber) {
     setEnteredNumber(enteredNumber);
@@ -35,10 +45,12 @@ function StartGameScreen({ onPickNumber }) {
     onPickNumber(chosenNumber);
   }
 
+  const marginTopDistance = height < 380 ? 30 : 100;
+
   return (
-    <View style={styles.rootContainer}>
+    <View style={[styles.rootContainer, { marginTop: marginTopDistance }]}>
       <Title>Guess My Number</Title>
-      <Card>
+      <Card isGameScreen={false}>
         <InstructionText>Enter a Number</InstructionText>
         <TextInput
           style={styles.numberInput}
@@ -68,10 +80,12 @@ function StartGameScreen({ onPickNumber }) {
 
 export default StartGameScreen;
 
+// const deviceHeight = Dimensions.get("window").height;
+
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    marginTop: 100,
+    // marginTop: deviceHeight < 365 ? 30 : 50,
     alignItems: "center",
   },
 
