@@ -1,4 +1,4 @@
-import { View, Image, StyleSheet, Text } from "react-native";
+import { View, Image, StyleSheet, Text, Dimensions } from "react-native";
 
 import Title from "../components/ui/Title";
 import PrimaryButton from "../components/ui/PrimaryButton";
@@ -33,17 +33,19 @@ function GameOverScreen({ roundsNumber, userNumber, onStartNewGame }) {
 
 export default GameOverScreen;
 
+const deviceWidth = Dimensions.get("window").width; // we could have also used "height" instead of "width" here. 
+
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     padding: 24,
     justifyContent: "center",
-    alignContent: "center",
+    alignItems: "center",
   },
   imageContainer: {
-    width: 300,
-    height: 300,
-    borderRadius: 150, // width & height must be same, "borderRadius" should be half of width & height, using this we can create a circle
+    width: deviceWidth < 380 ? 150 : 300,
+    height: deviceWidth < 380 ? 150 : 300,
+    borderRadius: deviceWidth < 380 ? 75 : 150, // width & height must be same, "borderRadius" should be half of width & height, using this we can create a circle
     borderWidth: 3,
     borderColor: Colors.primary800,
     overflow: "hidden", // to hide the overflow nature of the actual image
