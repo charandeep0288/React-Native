@@ -1,12 +1,19 @@
-import { Pressable, View, Text } from "react-native";
+import { Pressable, View, Text, StyleSheet, Platform } from "react-native";
 
 function CategorieGridTile({ title, color }) {
   return (
-    <View>
+    <View style={styles.gridItem}>
       {/* We want to redirect to the differen screen onPress of this component so added this Pressable Component */}
-      <Pressable>
-        <View>
-          <Text>{title}</Text>
+      {/* "android_ripple" gives ripple effect on android only not on iOS */}
+      <Pressable
+        android_ripple={{ color: "#ccc" }}
+        style={({ pressed }) => [
+          styles.button,
+          pressed ? styles.buttonPressed : null,
+        ]}
+      >
+        <View style={[styles.innerContainer, { backgroundColor: color }]}>
+          <Text style={styles.title}>{title}</Text>
         </View>
       </Pressable>
     </View>
@@ -14,3 +21,42 @@ function CategorieGridTile({ title, color }) {
 }
 
 export default CategorieGridTile;
+
+const styles = StyleSheet.create({
+  gridItem: {
+    flex: 1,
+    margin: 16,
+    height: 150,
+    borderRadius: 8,
+    elevation: 4, // for shadow on Android
+
+    // for shadow on iOS
+    backgroundColor: "white", // for shadow to be visible we need to add "backgroundColor" for iOS
+    shadowColor: "black",
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 8,
+    overflow: Platform.OS === "android" ? "hidden" : "visible",
+  },
+
+  buttonPressed: {
+    opacity: 0.5,
+  },
+
+  button: {
+    flex: 1,
+  },
+
+  innerContainer: {
+    flex: 1,
+    padding: 16,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  title: {
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+});

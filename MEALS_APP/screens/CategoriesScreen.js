@@ -18,7 +18,8 @@ function CategoriesScreen() {
       data={CATEGORIES}
       keyExtractor={(item) => item.id}
       renderItem={renderCategoryItem}
-    ></FlatList>
+      numColumns={2}
+    />
   );
 }
 
