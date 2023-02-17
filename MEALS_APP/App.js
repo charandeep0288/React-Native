@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native"; // wrap the app 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import CategoriesScreen from "./screens/CategoriesScreen";
+import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 
 const Stack = createNativeStackNavigator(); // "Stack" is with 2 properties(Navigator, Screen) where every property act as a component.
 
@@ -13,8 +14,10 @@ export default function App() {
       <StatusBar style="dark" />
       <NavigationContainer>
         <Stack.Navigator>
-          {/* Screen is a screen that is managed by this <Stack.Navigator> */}
-          <Stack.Screen name="MealsCategories" component={CategoriesScreen}/>
+          {/* Stack.Screen is a screen that is managed by this <Stack.Navigator> */}
+          {/* component is the component we want to render, in this case <CategoriesScreen> component*/}
+          <Stack.Screen name="MealsCategories" component={CategoriesScreen} />
+          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </>

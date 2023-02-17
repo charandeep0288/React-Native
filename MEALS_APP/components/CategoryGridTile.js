@@ -1,6 +1,6 @@
 import { Pressable, View, Text, StyleSheet, Platform } from "react-native";
 
-function CategorieGridTile({ title, color }) {
+function CategorieGridTile({ title, color, onPressProp }) {
   return (
     <View style={styles.gridItem}>
       {/* We want to redirect to the differen screen onPress of this component so added this Pressable Component */}
@@ -11,6 +11,7 @@ function CategorieGridTile({ title, color }) {
           styles.button,
           pressed ? styles.buttonPressed : null,
         ]}
+        onPress={onPressProp}
       >
         <View style={[styles.innerContainer, { backgroundColor: color }]}>
           <Text style={styles.title}>{title}</Text>
