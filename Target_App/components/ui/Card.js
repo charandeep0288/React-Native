@@ -11,7 +11,7 @@ function Card({ children, isGameScreen }) {
 
   const marginDistance = height < 365 ? 10 : isGameScreen ? 3 : 36;
   const marginDistance0 = width < 380 ? 10 : 36;
-  console.log(width + " " + height);
+  // console.log(width + " " + height);
 
   return (
     <View style={[styles.card, { marginTop: marginDistance }]}>{children}</View>

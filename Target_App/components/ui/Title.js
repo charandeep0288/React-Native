@@ -3,7 +3,6 @@ import { Text, StyleSheet, useWindowDimensions } from "react-native";
 function Title({ children }) {
   const { width, height } = useWindowDimensions();
   
-  const paddingDistance = height < 365 ? 1 : 1;
   const textFontSize = height < 365 ? 18 : 22;
 
   return <Text style={[styles.title, {fontSize: textFontSize}]}>{children}</Text>;
