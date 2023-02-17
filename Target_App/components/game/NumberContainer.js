@@ -15,8 +15,15 @@ function NumberContainer({ children }) {
   const numberFontSize = height < 365 ? 20 : 28;
 
   return (
-    <View style={[styles.container, {margin: paddingMarginDistance, padding: paddingMarginDistance}]}>
-      <Text style={[styles.numberText, {fontSize: numberFontSize}]}>{children}</Text>
+    <View
+      style={[
+        styles.container,
+        { margin: paddingMarginDistance, padding: paddingMarginDistance },
+      ]}
+    >
+      <Text style={[styles.numberText, { fontSize: numberFontSize }]}>
+        {children}
+      </Text>
     </View>
   );
 }
