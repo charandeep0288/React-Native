@@ -2,7 +2,7 @@ import { FlatList } from "react-native";
 import { CATEGORIES } from "../data/dummy-data";
 import CategorieGridTile from "../components/CategoryGridTile";
 
-// "navigation" prop is provided by the <Stack.Screen> component only, not to its nested or child component
+// "navigation" prop is provided by the <Stack.Screen> component only to the screen we have specified, not to its nested or child component(we can pass this "navigation" to its child component using props or a hook i.s, useNavigation hook provided by "@react-navigation/native").
 function CategoriesScreen({ navigation }) {
   function renderCategoryItem(itemData) {
     function pressHandler() {
