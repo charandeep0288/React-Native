@@ -16,5 +16,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "white",
     padding: 12,
+    maxWidth: "95%", // to create more responsive app, & this "95%" is of the parent container.
+    width: 300
   },
 });
