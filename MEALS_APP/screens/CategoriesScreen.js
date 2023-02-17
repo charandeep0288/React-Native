@@ -6,7 +6,10 @@ import CategorieGridTile from "../components/CategoryGridTile";
 function CategoriesScreen({ navigation }) {
   function renderCategoryItem(itemData) {
     function pressHandler() {
-      navigation.navigate("MealsOverview"); // we give the name of the component we want to render to this navigate() fn.
+      // navigation.navigate("ScreenName", { object to send data });
+      navigation.navigate("MealsOverview", {
+        categoryId: itemData.item.id // sending the "categoryId" to the "MealsOverview" Screen, & to extract this value in "MealOverview" Screen we use "route" params -> "route.pramas" OR we can use useRoute() Hook to extract this value.
+      }); // we give the name of the component we want to render to this navigate() fn, also we can "send data" btw screens using this fn only
     }
 
     return (

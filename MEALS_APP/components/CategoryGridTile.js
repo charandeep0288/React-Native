@@ -1,8 +1,8 @@
 import { Pressable, View, Text, StyleSheet, Platform } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+// import { useNavigation } from "@react-navigation/native";
 
 function CategorieGridTile({ title, color, onPressProp }) {
-  const navigation = useNavigation(); // we can use this hook in any component no matter if that Screen/component is registered as Screen or not, returns navigation
+//   const navigation = useNavigation(); // we can use this hook in any component no matter if that Screen/component is registered as Screen or not, returns navigation
 
   return (
     <View style={styles.gridItem}>
