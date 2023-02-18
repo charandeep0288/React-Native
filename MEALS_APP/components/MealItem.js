@@ -6,8 +6,24 @@ import {
   StyleSheet,
   Platform,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-function MealItem({ title, imageUrl, duration, complexity, affordability }) {
+function MealItem({
+  id,
+  title,
+  imageUrl,
+  duration,
+  complexity,
+  affordability,
+}) {
+  const navigation = useNavigation();
+
+  function selectMealItemHandler() {
+    navigation.navigate("MealDetail", {
+      mealId: id,
+    });
+  }
+
   return (
     <View style={styles.mealItem}>
       <Pressable
@@ -15,6 +31,7 @@ function MealItem({ title, imageUrl, duration, complexity, affordability }) {
         android_ripple={{ color: "#ccc" }}
         // we did this to have some feedback to give back when user click on this component, for iOS, (but we also get this "opacity effect" on "Android" also with this "android_ripple" effect )
         style={({ pressed }) => (pressed ? styles.buttonPressed : null)}
+        onPress={selectMealItemHandler}
       >
         <View style={styles.innerContainer}>
           <View>
