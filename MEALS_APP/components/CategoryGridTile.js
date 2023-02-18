@@ -10,6 +10,7 @@ function CategorieGridTile({ title, color, onPressProp }) {
       {/* "android_ripple" gives ripple effect on android only not on iOS */}
       <Pressable
         android_ripple={{ color: "#ccc" }}
+        // we this to have some feedback to give back when user click on this component, for iOS 
         style={({ pressed }) => [
           styles.button,
           pressed ? styles.buttonPressed : null,
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     // for shadow on iOS
     backgroundColor: "white", // for shadow to be visible we need to add "backgroundColor" for iOS
     shadowColor: "black",
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.25,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
     overflow: Platform.OS === "android" ? "hidden" : "visible",
