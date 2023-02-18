@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator(); // "Stack" is with 2 properties(Navi
 export default function App() {
   return (
     <>
-      <StatusBar style="dark" />
+      <StatusBar style="light" />
       <NavigationContainer>
         <Stack.Navigator
           // if we want these properties or styles applied to all screen in this naivagation, then we can define styles using "screenOptions" prop on Navigator Component.
@@ -30,7 +30,18 @@ export default function App() {
               title: "All Categories", // this title would be visible at the top of the screen
             }}
           />
-          <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
+          <Stack.Screen
+            name="MealsOverview"
+            component={MealsOverviewScreen}
+            // this is a 1 way -> to set title as category name on MealsOverviewScreen
+            // we get these properties {route, navigation} passed by React Navigation to this options prop and using destructuring to extract those values in the fn we have in options prop
+            // options={({ route, navigation }) => {
+            //   const catId = route.params.categoryId;
+            //   return {
+            //     title: catId, // we can CATEGORIES from dummy-data to get title of the category
+            //   };
+            // }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
