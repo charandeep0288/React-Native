@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native"; // wrap the app with this "NavigationContainer" container to make whole app use Navigation to switch btw different screens
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -43,7 +43,17 @@ export default function App() {
             //   };
             // }}
           />
-          <Stack.Screen name="MealDetail" component={MealDetailScreen} />
+          <Stack.Screen
+            name="MealDetail"
+            component={MealDetailScreen}
+            // this is a 1 way of adding a component or btn to do, if we don't want to direct interact with the component that is responsible for rendering the screen content(MealDetailScreen). 
+            // if want to have direct communication with component that is responsible for rendering the screen content(MealDetailScreen) then we can go to this component(MealDetailScreen) and do things using "useLayoutEffect" hook
+            // options={{
+            //   headerRight: () => {
+            //     return <Button title="Tap me!">In the header</Button>;
+            //   },
+            // }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>
