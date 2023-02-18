@@ -13,10 +13,23 @@ export default function App() {
     <>
       <StatusBar style="dark" />
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          // if we want these properties or styles applied to all screen in this naivagation, then we can define styles using "screenOptions" prop on Navigator Component.
+          screenOptions={{
+            headerStyle: { backgroundColor: "#351401" },
+            headerTintColor: "white",
+            contentStyle: { backgroundColor: "#3f2f25" },
+          }}
+        >
           {/* Stack.Screen is a screen that is managed by this <Stack.Navigator> */}
           {/* component is the component we want to render, in this case <CategoriesScreen> component*/}
-          <Stack.Screen name="MealsCategories" component={CategoriesScreen} />
+          <Stack.Screen
+            name="MealsCategories"
+            component={CategoriesScreen}
+            options={{
+              title: "All Categories", // this title would be visible at the top of the screen
+            }}
+          />
           <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
         </Stack.Navigator>
       </NavigationContainer>
