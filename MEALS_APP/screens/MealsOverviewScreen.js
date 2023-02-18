@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
+import MealItem from "../components/MealItem";
 import { MEALS } from "../data/dummy-data";
 
 // we also get "route" props as we get "navigation" porps because this component("MealsOverviewScreen") is regestered as a Screen with the React Navigation
@@ -8,11 +9,25 @@ function MealsOverviewScreen({ navigation, route }) {
   // const route = useRoute(); // define useRoute() Hook like this.
   // route.params // we can access the params like this.
 
-  const catId = route.params.categoryId; // it is a object contains the params that we might have passed to this Screen.
+  const catId = route.params.categoryId; // "route" is a object contains the params that we might have passed to this Screen.
+
+  const displayedMeals = MEALS.filter((mealItem) => {
+    return mealItem.categoryIds.indexOf(catId) >= 0; // .indexOf() returns "-1" value if that value is there in that array, otherwise it gives the indexOf that element
+  });
+
+  function renderMealItem(itemData) {
+    return(
+      <MealItem title={itemData.item.title}/>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      <Text>Meals Overview Screen - {catId}</Text>
+      <FlatList
+        data={displayedMeals}
+        keyExtractor={(item) => item.id}
+        renderItem={renderMealItem}
+      />
     </View>
   );
 }

@@ -27,7 +27,8 @@ function CategoriesScreen({ navigation }) {
       data={CATEGORIES}
       keyExtractor={(item) => item.id}
       renderItem={renderCategoryItem}
-      numColumns={2}
+      // to render 2 items next to each other we use this "numColumns"
+      numColumns={2} 
     />
   );
 }
