@@ -2,12 +2,36 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native"; // wrap the app with this "NavigationContainer" container to make whole app use Navigation to switch btw different screens
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import CategoriesScreen from "./screens/CategoriesScreen";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailScreen from "./screens/MealDetailScreen";
+import FavoritiesScreen from "./screens/FavoritiesScreen";
 
 const Stack = createNativeStackNavigator(); // "Stack" is with 2 properties(Navigator, Screen) where every property act as a component.
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#351401" },
+        headerTintColor: "white",
+        sceneContainerStyle: { backgroundColor: "#3f2f25" },
+      }}
+    >
+      <Drawer.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={{
+          title: "All Categories",
+        }}
+      />
+      <Drawer.Screen name="Favorities" component={FavoritiesScreen} />
+    </Drawer.Navigator>
+  );
+}
 
 export default function App() {
   return (
@@ -25,10 +49,10 @@ export default function App() {
           {/* Stack.Screen is a screen that is managed by this <Stack.Navigator> */}
           {/* component is the component we want to render, in this case <CategoriesScreen> component*/}
           <Stack.Screen
-            name="MealsCategories"
-            component={CategoriesScreen}
+            name="Drawer"
+            component={DrawerNavigator}
             options={{
-              title: "All Categories", // this title would be visible at the top of the screen
+              headerShown: false, // remove the header of the Stack, because we want to keep the header of Drawer
             }}
           />
           <Stack.Screen
@@ -46,13 +70,17 @@ export default function App() {
           <Stack.Screen
             name="MealDetail"
             component={MealDetailScreen}
-            // this is a 1 way of adding a component or btn to do, if we don't want to direct interact with the component that is responsible for rendering the screen content(MealDetailScreen). 
+            // this is a 1 way of adding a component or btn to do, if we don't want to direct interact with the component that is responsible for rendering the screen content(MealDetailScreen).
             // if want to have direct communication with component that is responsible for rendering the screen content(MealDetailScreen) then we can go to this component(MealDetailScreen) and do things using "useLayoutEffect" hook
             // options={{
             //   headerRight: () => {
             //     return <Button title="Tap me!">In the header</Button>;
             //   },
             // }}
+
+            options={{
+              title: "About the Meal",
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>
