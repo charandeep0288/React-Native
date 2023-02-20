@@ -1,9 +1,8 @@
 import { useLayoutEffect } from "react"; // we use this hook when we want to run something with the fn of the component rendering itself
-import { View, FlatList, StyleSheet } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
-import MealItem from "../components/MealItem";
 import { MEALS, CATEGORIES } from "../data/dummy-data";
+import MealsList from "../components/MealsList/MealsList";
 
 // we also get "route" props as we get "navigation" porps because this component("MealsOverviewScreen") is regestered as a Screen with the React Navigation
 function MealsOverviewScreen({ route, navigation }) {
@@ -16,7 +15,8 @@ function MealsOverviewScreen({ route, navigation }) {
     return mealItem.categoryIds.indexOf(catId) >= 0; // .indexOf() returns "-1" value if that value is there in that array, otherwise it gives the indexOf that element
   });
 
-  useLayoutEffect(() => { // "useLayoutEffect" can be used same as "useEffect"
+  useLayoutEffect(() => {
+    // "useLayoutEffect" can be used same as "useEffect"
     const categoryTitle = CATEGORIES.find(
       (category) => category.id === catId
     ).title; // this could be "null" but we know that we are coming to this Screen through navigation, so we can access this "title" like this.
@@ -26,37 +26,8 @@ function MealsOverviewScreen({ route, navigation }) {
       title: categoryTitle,
     });
   }, [catId, navigation]);
-
-  function renderMealItem(itemData) {
-    const item = itemData.item; // helper constant
-    
-    const mealItemProps = {
-      id: item.id,
-      title: item.title,
-      imageUrl: item.imageUrl,
-      duration: item.duration,
-      complexity: item.complexity,
-      affordability: item.affordability,
-    };
-    return <MealItem {...mealItemProps} />;
-  }
-
-  return (
-    <View style={styles.container}>
-      <FlatList
-        data={displayedMeals}
-        keyExtractor={(item) => item.id}
-        renderItem={renderMealItem}
-      />
-    </View>
-  );
+  
+  return <MealsList items={displayedMeals} />;
 }
 
 export default MealsOverviewScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-});
