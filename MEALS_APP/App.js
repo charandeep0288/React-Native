@@ -4,12 +4,14 @@ import { NavigationContainer } from "@react-navigation/native"; // wrap the app 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Ionicons } from "@expo/vector-icons";
+import { Provider } from "react-redux";
 
 import CategoriesScreen from "./screens/CategoriesScreen";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailScreen from "./screens/MealDetailScreen";
 import FavoritiesScreen from "./screens/FavoritiesScreen";
-import FavoritiesContextProvider from "./store/context/favorites-context";
+// import FavoritiesContextProvider from "./store/context/favorites-context";
+import { store } from "./store/redux/store";
 
 const Stack = createNativeStackNavigator(); // "Stack" is with 2 properties(Navigator, Screen) where every property act as a component.
 const Drawer = createDrawerNavigator();
@@ -54,7 +56,8 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <FavoritiesContextProvider>
+      {/* <FavoritiesContextProvider> */}
+      <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
             // if we want these properties or styles applied to all screen in this naivagation, then we can define styles using "screenOptions" prop on Navigator Component.
@@ -102,7 +105,8 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </FavoritiesContextProvider>
+      </Provider>
+      {/* </FavoritiesContextProvider> */}
     </>
   );
 }
