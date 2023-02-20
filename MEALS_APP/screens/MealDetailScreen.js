@@ -1,28 +1,34 @@
 import { useContext, useLayoutEffect } from "react";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 import IconButton from "../components/IconButton";
 import List from "../components/MealDetail/List";
 import Subtitle from "../components/MealDetail/Subtitle";
 import MealDetails from "../components/MealDetails";
 import { MEALS } from "../data/dummy-data"; // we can get that meal data using the meal id we get in the "route"
-import { FavoritiesContext } from "../store/context/favorites-context";
+// import { FavoritiesContext } from "../store/context/favorites-context";
+import { addFavorite, removeFavorite } from "../store/redux/favorites"; // imported the funs that we have defined in the store so that we can use them
 
 function MealDetailScreen({ route, navigation }) {
-  const favoriteMealCtx = useContext(FavoritiesContext); // we need to send the "FavoritiesContext" as argument, which is the context we created in the "favorites-context.js" file
+  // const favoriteMealCtx = useContext(FavoritiesContext); // we need to send the "FavoritiesContext" as argument, which is the context we created in the "favorites-context.js" file
+  const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids); // to get data out of store
+  const dispatch = useDispatch();
 
   const mealId = route.params.mealId;
-
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
-  const mealIsFavorite = favoriteMealCtx.ids.includes(mealId);
+  // const mealIsFavorite = favoriteMealCtx.ids.includes(mealId);
+  const mealIsFavorite = favoriteMealIds.includes(mealId);
 
   function ChangeFavoriteStatusHandler() {
     // console.log("Pressed!");
-    if(mealIsFavorite) {
-      favoriteMealCtx.removeFavorite(mealId);
+    if (mealIsFavorite) {
+      // favoriteMealCtx.removeFavorite(mealId);
+      dispatch(removeFavorite({ id: mealId })); // we "dispatch" an "action" to the function in the store
     } else {
-      favoriteMealCtx.addFavorite(mealId);
+      // favoriteMealCtx.addFavorite(mealId);
+      dispatch(addFavorite({ id: mealId }));
     }
   }
 
