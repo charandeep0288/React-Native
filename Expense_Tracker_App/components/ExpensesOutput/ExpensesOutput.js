@@ -44,7 +44,7 @@ function ExpensesOutput({ expenses, expensesPeriod }) {
       <ExpensesSummary expenses={DUMMY_EXPENSES} periodName={expensesPeriod} />
 
       {/* LIST OF EXPENSES */}
-      <ExpensesList />
+      <ExpensesList expenses={DUMMY_EXPENSES}  />
     </View>
   );
 }
