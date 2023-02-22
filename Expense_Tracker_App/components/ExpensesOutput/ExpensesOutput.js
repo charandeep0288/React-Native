@@ -10,10 +10,10 @@ function ExpensesOutput({ expenses, expensesPeriod }) {
   return (
     <View style={styles.container}>
       {/* SUMMARY */}
-      <ExpensesSummary expenses={DUMMY_EXPENSES} periodName={expensesPeriod} />
+      <ExpensesSummary expenses={expenses} periodName={expensesPeriod} />
 
       {/* LIST OF EXPENSES */}
-      <ExpensesList expenses={DUMMY_EXPENSES} />
+      <ExpensesList expenses={expenses} />
     </View>
   );
 }
