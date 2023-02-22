@@ -1,11 +1,13 @@
-import { useLayoutEffect } from "react";
+import { useContext, useLayoutEffect } from "react";
 import { View, StyleSheet } from "react-native";
 
 import Button from "../components/UI/Button";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/style";
+import { ExpensesContext } from "../store/expneses-context";
 
 function ManageExpense({ route, navigation }) {
+  const expenseCtx = useContext(ExpensesContext);
   const editedExpenseId = route.params?.expenseId; // if we get an "id" in "editedExpenseId" variable that means are editing an expense & if we get "undefined" that means we failed to retrieve the "id" which means we are adding a new expense.
 
   const isEditing = !!editedExpenseId; // using "!!" in front of a variable we can convert a value into a boolean value, which is true if "id" exists and false if "id" doesn't exists.
@@ -17,6 +19,7 @@ function ManageExpense({ route, navigation }) {
   }, [navigation, isEditing]);
 
   function deleteExpenseHandler() {
+    expenseCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
   }
 
@@ -25,6 +28,19 @@ function ManageExpense({ route, navigation }) {
   }
 
   function ConfirmHandler() {
+    if (isEditing) {
+      expenseCtx.updateExpense(editedExpenseId, {
+        description: "Test!!!",
+        amount: 22.22,
+        date: new Date("2028-09-01"),
+      });
+    } else {
+      expenseCtx.addExpense({
+        description: "Test",
+        amount: 11.11,
+        date: new Date("2023-02-22"),
+      });
+    }
     navigation.goBack();
   }
 
@@ -34,7 +50,7 @@ function ManageExpense({ route, navigation }) {
         <Button style={styles.button} mode="flat" onPressProp={CancelHandler}>
           Cancel
         </Button>
-        <Button style={styles.button} onPressProp={CancelHandler}>
+        <Button style={styles.button} onPressProp={ConfirmHandler}>
           {isEditing ? "Update" : "Add"}
         </Button>
       </View>

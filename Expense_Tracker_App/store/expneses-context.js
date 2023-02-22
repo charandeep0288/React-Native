@@ -74,14 +74,14 @@ function expensesReducer(state, action) {
   // Reducer fn for useReducer() hook
   switch (action.type) {
     case "ADD":
-      const id = new Data.toString() + Math.random().toString(); // pseudo unique id
+      const id = new Date().toString() + Math.random().toString(); // pseudo unique id
       return [{ ...action.payload, id: id }, ...state];
     case "UPDATE":
       const updateableExpenseIndex = state.findIndex(
         (expense) => expense.id === action.payload.id
       ); // this gives us the index of the item that should be updated 
       const updatableExpense = state[updateableExpenseIndex];
-      const updatedItem = {...updatableExpense, ...action.payload.data} // we would keep the "id" & update/override the all other fields data
+      const updatedItem = {...updatableExpense, ...action.payload.date} // we would keep the "id" & update/override the all other fields data
       const updatedExpenses = [...state]; // created new array to keep everything immutable
       updatedExpenses[updateableExpenseIndex] = updatedItem;
       return updatedExpenses;
@@ -109,7 +109,7 @@ function ExpensesContextProvider({ children }) {
 
   // expenseData => { description, amount, date }
   function updateExpense(id, expenseData) {
-    dispatch({ type: "UPDATE", payload: { id: id, data: expenseData } });
+    dispatch({ type: "UPDATE", payload: { id: id, date: expenseData } });
   }
 
   const value = {
