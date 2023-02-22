@@ -16,11 +16,17 @@ function ManageExpense({ route, navigation }) {
     });
   }, [navigation, isEditing]);
 
-  function deleteExpenseHandler() {}
+  function deleteExpenseHandler() {
+    navigation.goBack();
+  }
 
-  function CancelHandler() {}
+  function CancelHandler() {
+    navigation.goBack(); // we back to the Screen which opened this Screen, which means we close this Screen
+  }
 
-  function ConfirmHandler() {}
+  function ConfirmHandler() {
+    navigation.goBack();
+  }
 
   return (
     <View style={styles.container}>
