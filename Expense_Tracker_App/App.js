@@ -9,11 +9,13 @@ import RecentExpenses from "./screens/RecentExpenses";
 import AllExpenses from "./screens/AllExpenses";
 
 import { GlobalStyles } from "./constants/style";
+import IconButton from "./components/UI/IconButton";
 
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 function ExpensesOverview() {
+
   return (
     <BottomTabs.Navigator
       screenOptions={{
@@ -21,6 +23,9 @@ function ExpensesOverview() {
         headerTintColor: "white",
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        headerRight: ({tintColor}) => { // "tintColor" is a color which we get as a prop here that we have setted( using "headerTintColor" propery) on this <BottomTabs>
+          return <IconButton icon="add" size={24} color={tintColor} onPressProp={() => {console.log("Pressed!")}}/>
+        }
       }}
     >
       <BottomTabs.Screen
