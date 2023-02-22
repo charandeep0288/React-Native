@@ -30,7 +30,7 @@ function ExpensesOverview() {
               size={24}
               color={tintColor}
               onPressProp={() => {
-                navigation.navigate("ManageExpense");
+                navigation.navigate("ManageExpense"); // we don't need to send any "id" here because we are just creating a new Expense here, not editing an existing expense.
               }}
             />
           );
