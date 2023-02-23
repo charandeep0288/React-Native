@@ -21,7 +21,14 @@ function ExpenseForm() {
           onChangeText: () => {},
         }}
       />
-      <Input label="Description" textInputConfig={{}} />
+      <Input
+        label="Description"
+        textInputConfig={{
+          multiline: true,
+          // autoCorrect: false, // default is true, eg:- we don't want this "autoCorrect" when we are writting an email, , that would create lots of problems.
+          // autoCapitalize: "characters", // "sentences" by default are Capitalized, other options -> "characters", "words", "none"......... eg:- we don't want this "autoCapitalize" when we are writting an email, that would create lots of problems.
+        }}
+      />
     </View>
   );
 }
