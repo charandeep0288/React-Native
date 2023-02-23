@@ -6,7 +6,7 @@ function Input({ label, style, textInputConfig }) {
 
   const inputStyles = [styles.input];
 
-  if(textInputConfig && textInputConfig.multiline) {
+  if (textInputConfig && textInputConfig.multiline) {
     inputStyles.push(styles.inputMutltiLine);
   }
 
@@ -26,11 +26,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     marginVertical: 8,
   },
+
   label: {
     fontSize: 12,
     color: GlobalStyles.colors.primary100,
     marginBottom: 4,
   },
+
   input: {
     backgroundColor: GlobalStyles.colors.primary100,
     color: GlobalStyles.colors.primary500,
@@ -38,6 +40,7 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     fontSize: 18,
   },
+
   inputMutltiLine: {
     minHeight: 100,
     textAlignVertical: "top", // used this to have same behaviour in both platforms

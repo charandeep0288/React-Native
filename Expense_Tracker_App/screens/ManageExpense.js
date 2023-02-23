@@ -24,11 +24,11 @@ function ManageExpense({ route, navigation }) {
     navigation.goBack();
   }
 
-  function CancelHandler() {
+  function cancelHandler() {
     navigation.goBack(); // we back to the Screen which opened this Screen, which means we close this Screen
   }
 
-  function ConfirmHandler() {
+  function confirmHandler() {
     if (isEditing) {
       expenseCtx.updateExpense(editedExpenseId, {
         description: "Test!!!",
@@ -47,15 +47,11 @@ function ManageExpense({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <ExpenseForm />
-      <View style={styles.buttons}>
-        <Button style={styles.button} mode="flat" onPressProp={CancelHandler}>
-          Cancel
-        </Button>
-        <Button style={styles.button} onPressProp={ConfirmHandler}>
-          {isEditing ? "Update" : "Add"}
-        </Button>
-      </View>
+      <ExpenseForm
+        submitButtonLabel={isEditing ? "Update" : "Add"}
+        onCancel={cancelHandler}
+      />
+
       {isEditing && (
         <View style={styles.deleteContainer}>
           <IconButton
@@ -77,17 +73,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     backgroundColor: GlobalStyles.colors.primary800,
-  },
-
-  buttons: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  button: {
-    minWidth: 120,
-    marginHorizontal: 8,
   },
 
   deleteContainer: {

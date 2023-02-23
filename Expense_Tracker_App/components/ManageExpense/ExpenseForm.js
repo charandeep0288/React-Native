@@ -1,25 +1,30 @@
 import { useState } from "react";
 import { Text, View, StyleSheet } from "react-native";
+
 import Input from "./Input";
+import Button from "../UI/Button";
 
-function ExpenseForm() {
-//   const [amountValue, setAmountValue] = useState(""); // we have intial value "" because what value we get from the TextInput is a string, ever if we have entered a number, so we have used this "Empty string(.)" here instead of a numaric value.
+function ExpenseForm({ submitButtonLabel, onCancel, onSubmit }) {
+  //   const [amountValue, setAmountValue] = useState(""); // we have intial value "" because what value we get from the TextInput is a string, ever if we have entered a number, so we have used this "Empty string(.)" here instead of a numaric value.
 
-  const [inputValues, setInputValues] = useState({ // helps us to reduce the redundant code
+  const [inputValues, setInputValues] = useState({
+    // helps us to reduce the redundant code
     amount: "",
     date: "",
-    description: ""
+    description: "",
   }); // instead of creating 3 useState() for individual case here, we can also create only one useState() to handle all the States
 
-  function inputChangedHandler(inputIdentifier, enteredValue) { // react-native gives us the entered text, if we connect this fn to the "onChangeText" effect. And "inputIdentifier" we have to send this value to the fn when calling it because react-native doesn't know about this "inputIdentifier" value
+  function inputChangedHandler(inputIdentifier, enteredValue) {
+    // react-native gives us the entered text, if we connect this fn to the "onChangeText" effect. And "inputIdentifier" we have to send this value to the fn when calling it because react-native doesn't know about this "inputIdentifier" value
     setInputValues((currentInputValues) => {
-        return {
-            ...currentInputValues,
-            [inputIdentifier]: enteredValue // JS functionality to set and target a property dynamically
-        }
+      return {
+        ...currentInputValues,
+        [inputIdentifier]: enteredValue, // JS functionality to set and target a property dynamically
+      };
     }); // if we update state based on previous state we use this function format
   }
 
+  function submitHandler() {}
 
   return (
     <View style={styles.form}>
@@ -56,6 +61,14 @@ function ExpenseForm() {
           value: inputValues["description"],
         }}
       />
+      <View style={styles.buttons}>
+        <Button style={styles.button} mode="flat" onPressProp={onCancel}>
+          Cancel
+        </Button>
+        <Button style={styles.button} onPressProp={submitHandler}>
+          {submitButtonLabel}
+        </Button>
+      </View>
     </View>
   );
 }
@@ -82,5 +95,16 @@ const styles = StyleSheet.create({
 
   rowInput: {
     flex: 1,
+  },
+
+  buttons: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  button: {
+    minWidth: 120,
+    marginHorizontal: 8,
   },
 });
