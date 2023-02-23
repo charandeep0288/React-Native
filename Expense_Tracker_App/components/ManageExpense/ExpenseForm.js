@@ -4,6 +4,7 @@ import { Text, View, StyleSheet, Alert } from "react-native";
 import Input from "./Input";
 import Button from "../UI/Button";
 import { getFormattedDate } from "../../util/date";
+import { GlobalStyles } from "../../constants/style";
 
 function ExpenseForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
   //   const [amountValue, setAmountValue] = useState(""); // we have intial value "" because what value we get from the TextInput is a string, ever if we have entered a number, so we have used this "Empty string(.)" here instead of a numaric value.
@@ -79,6 +80,7 @@ function ExpenseForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
         <Input
           style={styles.rowInput}
           label="Amount"
+          invalid={!inputs.amount.isValid}
           textInputConfig={{
             keyboardType: "decimal-pad",
             onChangeText: inputChangedHandler.bind(this, "amount"), // "enteredValue" we don't need to sent this value because this will be provided by the react-native by default as a second parameter
@@ -88,6 +90,7 @@ function ExpenseForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
         <Input
           style={styles.rowInput}
           label="Date"
+          invalid={!inputs.date.isValid}
           textInputConfig={{
             placeholder: "YYYY-MM-DD",
             maxLength: 10,
@@ -99,6 +102,7 @@ function ExpenseForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
 
       <Input
         label="Description"
+        invalid={!inputs.description.isValid}
         textInputConfig={{
           multiline: true,
           // autoCorrect: false, // default is true, eg:- we don't want this "autoCorrect" when we are writting an email, , that would create lots of problems.
@@ -109,7 +113,9 @@ function ExpenseForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
       />
 
       {formIsInvalid && (
-        <Text>Invalid input values - please check your entered data!</Text>
+        <Text style={styles.errorText}>
+          Invalid input values - please check your entered data!
+        </Text>
       )}
 
       <View style={styles.buttons}>
@@ -146,6 +152,13 @@ const styles = StyleSheet.create({
 
   rowInput: {
     flex: 1,
+  },
+
+  errorText: {
+    textAlign: "center",
+    color: GlobalStyles.colors.error500,
+    margin: 8,
+    fontWeight: "bold",
   },
 
   buttons: {
