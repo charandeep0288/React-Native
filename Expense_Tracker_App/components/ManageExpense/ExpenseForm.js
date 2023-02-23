@@ -3,15 +3,16 @@ import { Text, View, StyleSheet } from "react-native";
 
 import Input from "./Input";
 import Button from "../UI/Button";
+import { getFormattedDate } from "../../util/date";
 
-function ExpenseForm({ submitButtonLabel, onCancel, onSubmit }) {
+function ExpenseForm({ submitButtonLabel, onCancel, onSubmit, defaultValues }) {
   //   const [amountValue, setAmountValue] = useState(""); // we have intial value "" because what value we get from the TextInput is a string, ever if we have entered a number, so we have used this "Empty string(.)" here instead of a numaric value.
 
   const [inputValues, setInputValues] = useState({
     // helps us to reduce the redundant code
-    amount: "",
-    date: "",
-    description: "",
+    amount: defaultValues ? defaultValues.amount.toString() : "", // we have to convert this default "amount" value to the string because we converted it to number and then stored is as number there
+    date: defaultValues ? getFormattedDate(defaultValues.date) : "",
+    description: defaultValues ? defaultValues.description : "",
   }); // instead of creating 3 useState() for individual case here, we can also create only one useState() to handle all the States
 
   function inputChangedHandler(inputIdentifier, enteredValue) {

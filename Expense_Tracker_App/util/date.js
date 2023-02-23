@@ -1,6 +1,7 @@
 export function getFormattedDate(date) {
   // .getMonth() with yield "0" for January, "1" for February and so on.
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  // return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  return date.toISOString().slice(0, 10);
 }
 
 export function getDateMinusDays(date, days) {
