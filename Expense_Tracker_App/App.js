@@ -100,3 +100,8 @@ export default function App() {
 // npm install @react-navigation/native-stack
 
 // npm install @react-navigation/bottom-tabs
+
+// fetch(); // in react-native we can use the fetch() API which is also present in the brower, but react-native also support XML HTTP requests, that means we can use this "axios" library
+// "axios" is a promise based HTTP client which we can use in brower and also in react-native
+
+// npm install axios
