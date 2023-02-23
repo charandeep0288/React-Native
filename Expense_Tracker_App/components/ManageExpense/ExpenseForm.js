@@ -24,7 +24,15 @@ function ExpenseForm({ submitButtonLabel, onCancel, onSubmit }) {
     }); // if we update state based on previous state we use this function format
   }
 
-  function submitHandler() {}
+  function submitHandler() {
+    const expenseData = {
+      amount: +inputValues.amount, // + converts string value into a number
+      date: new Date(inputValues.date),
+      description: inputValues.description,
+    };
+
+    onSubmit(expenseData);
+  }
 
   return (
     <View style={styles.form}>
