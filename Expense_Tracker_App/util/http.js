@@ -18,7 +18,7 @@ export async function fetchExpenses() {
   // this next line would work, if we have "response" 
   const expenses = [];
 
-  console.log(response.data); // to see data
+  // console.log(response.data); // to see data
   for(const key in response.data ) { // axios gives us the "data" property on the response object which hold the actual data which was send back by the server  
     const expenseObj = {
         id: key,
