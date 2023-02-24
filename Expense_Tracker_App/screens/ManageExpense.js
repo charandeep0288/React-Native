@@ -2,10 +2,10 @@ import { useContext, useLayoutEffect } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
-import Button from "../components/UI/Button";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/style";
 import { ExpensesContext } from "../store/expneses-context";
+import { storeExpense } from "../util/http";
 
 function ManageExpense({ route, navigation }) {
   const expenseCtx = useContext(ExpensesContext);
@@ -32,10 +32,11 @@ function ManageExpense({ route, navigation }) {
     navigation.goBack(); // we back to the Screen which opened this Screen, which means we close this Screen
   }
 
-  function confirmHandler(expenseData) {
+  function confirmHandler(expenseData) { // "expenseData" is an object which contains { amount, date, description }
     if (isEditing) {
       expenseCtx.updateExpense(editedExpenseId, expenseData);
     } else {
+      storeExpense(expenseData); // sending request to the backend, to store this data
       expenseCtx.addExpense(expenseData);
     }
     navigation.goBack();
