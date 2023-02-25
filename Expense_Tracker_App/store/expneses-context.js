@@ -12,10 +12,12 @@ function expensesReducer(state, action) {
   // Reducer fn for useReducer() hook
   switch (action.type) {
     case "ADD":
-      const id = new Date().toString() + Math.random().toString(); // pseudo unique id
-      return [{ ...action.payload, id: id }, ...state];
+      // const id = new Date().toString() + Math.random().toString(); // pseudo unique id // we are going to use firebase id here instead of creating ower own id
+
+      return [action.payload, ...state];
     case "SET":
-      return action.payload;
+      const inverted = action.payload.reverse();
+      return inverted;
     case "UPDATE":
       const updateableExpenseIndex = state.findIndex(
         (expense) => expense.id === action.payload.id

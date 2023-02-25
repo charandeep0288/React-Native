@@ -32,12 +32,13 @@ function ManageExpense({ route, navigation }) {
     navigation.goBack(); // we back to the Screen which opened this Screen, which means we close this Screen
   }
 
-  function confirmHandler(expenseData) { // "expenseData" is an object which contains { amount, date, description }
+  async function confirmHandler(expenseData) { // "expenseData" is an object which contains { amount, date, description }
     if (isEditing) {
       expenseCtx.updateExpense(editedExpenseId, expenseData);
     } else {
-      storeExpense(expenseData); // sending request to the backend, to store this data
-      expenseCtx.addExpense(expenseData);
+      // console.log(expenseData);
+      const id = await storeExpense(expenseData); // sending request to the backend, to store this data
+      expenseCtx.addExpense({...expenseData, id: id});
     }
     navigation.goBack();
   }
