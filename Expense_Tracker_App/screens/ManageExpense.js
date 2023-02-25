@@ -1,13 +1,15 @@
-import { useContext, useLayoutEffect } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import IconButton from "../components/UI/IconButton";
+import LoadingOverlay from "../components/UI/LoadingOverlay";
 import { GlobalStyles } from "../constants/style";
 import { ExpensesContext } from "../store/expneses-context";
 import { storeExpense, updateExpense, deleteExpense } from "../util/http";
 
 function ManageExpense({ route, navigation }) {
+  const [isSubumitting, setIsSubumitting] = useState(false); // initally we are "not submitting data", instead we are "gathering data" from user
   const expenseCtx = useContext(ExpensesContext);
   const editedExpenseId = route.params?.expenseId; // if we get an "id" in "editedExpenseId" variable that means are editing an expense & if we get "undefined" that means we failed to retrieve the "id" which means we are adding a new expense.
 
@@ -24,7 +26,9 @@ function ManageExpense({ route, navigation }) {
   }, [navigation, isEditing]);
 
   async function deleteExpenseHandler() {
-    await adeleteExpense(editedExpenseId);
+    setIsSubumitting(true);
+    await deleteExpense(editedExpenseId);
+    // setIsSubumitting(false); // we don't need to do this because we are closing this screen after submutting delete request
     expenseCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
   }
@@ -33,7 +37,9 @@ function ManageExpense({ route, navigation }) {
     navigation.goBack(); // we back to the Screen which opened this Screen, which means we close this Screen
   }
 
-  async function confirmHandler(expenseData) { // "expenseData" is an object which contains { amount, date, description }
+  async function confirmHandler(expenseData) {
+    setIsSubumitting(true);
+    // "expenseData" is an object which contains { amount, date, description }
     if (isEditing) {
       expenseCtx.updateExpense(editedExpenseId, expenseData);
       // added await for the sake we update data in the backend and then close the modal
@@ -42,9 +48,14 @@ function ManageExpense({ route, navigation }) {
       // console.log(expenseData);
       // we can't do this here when we create a new expense because we are relied on the id that we get from the backend firebase, then update values with firebase id, to render content on the UI.
       const id = await storeExpense(expenseData); // sending request to the backend, to store this data
-      expenseCtx.addExpense({...expenseData, id: id});
+      expenseCtx.addExpense({ ...expenseData, id: id });
     }
+    // setIsSubumitting(false); // we can but, we don't need to do this because we are closing this screen after submutting delete request
     navigation.goBack();
+  }
+
+  if(isSubumitting) {
+    return <LoadingOverlay />
   }
 
   return (
@@ -53,7 +64,7 @@ function ManageExpense({ route, navigation }) {
         submitButtonLabel={isEditing ? "Update" : "Add"}
         onSubmit={confirmHandler}
         onCancel={cancelHandler}
-        defaultValues ={selectedExpense}
+        defaultValues={selectedExpense}
       />
 
       {isEditing && (

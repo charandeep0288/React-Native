@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
+import LoadingOverlay from "../components/UI/LoadingOverlay";
 import { ExpensesContext } from "../store/expneses-context";
 import { getDateMinusDays } from "../util/date";
 import { fetchExpenses } from "../util/http";
 
 function RecentExpenses() {
+  const [isFetching, setIsFetching] = useState(true);
   const expensesCtx = useContext(ExpensesContext);
 
   // const [fetchedExpenses, setFetchedExpenses] = useState([]);
@@ -13,14 +15,21 @@ function RecentExpenses() {
   // SOLUTION -> keep using Context, to update the data on the UI, in addition to the sending data to the backend
 
   // HTTTP Request is an asyncronous task
-  useEffect(() => { // we can't convert useEffect's fn in argument into async await, so we have to do a work around by creating another function in useEffect fn and calling it in this useEffect 
+  useEffect(() => {
+    // we can't convert useEffect's fn in argument into async await, so we have to do a work around by creating another function in useEffect fn and calling it in this useEffect
     async function getExpense() {
+      setIsFetching(true); // we are showing LoadingOverlay before fetching the data
       const expenses = await fetchExpenses();
+      setIsFetching(false); // and now after we are done with fetching the data we set its state to false
       expensesCtx.setExpenses(expenses);
     }
 
     getExpense();
   }, []);
+
+  if(isFetching) {
+    return <LoadingOverlay />
+  }
 
   const recentExpenses = expensesCtx.expenses.filter((expense) => {
     const today = new Date();
