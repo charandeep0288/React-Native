@@ -5,7 +5,7 @@ import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/style";
 import { ExpensesContext } from "../store/expneses-context";
-import { storeExpense } from "../util/http";
+import { storeExpense, updateExpense, deleteExpense } from "../util/http";
 
 function ManageExpense({ route, navigation }) {
   const expenseCtx = useContext(ExpensesContext);
@@ -23,7 +23,8 @@ function ManageExpense({ route, navigation }) {
     });
   }, [navigation, isEditing]);
 
-  function deleteExpenseHandler() {
+  async function deleteExpenseHandler() {
+    await adeleteExpense(editedExpenseId);
     expenseCtx.deleteExpense(editedExpenseId);
     navigation.goBack();
   }
@@ -35,8 +36,11 @@ function ManageExpense({ route, navigation }) {
   async function confirmHandler(expenseData) { // "expenseData" is an object which contains { amount, date, description }
     if (isEditing) {
       expenseCtx.updateExpense(editedExpenseId, expenseData);
+      // added await for the sake we update data in the backend and then close the modal
+      await updateExpense(editedExpenseId, expenseData); // we are updating data locally first then sending data to the backend, doing some optimizations
     } else {
       // console.log(expenseData);
+      // we can't do this here when we create a new expense because we are relied on the id that we get from the backend firebase, then update values with firebase id, to render content on the UI.
       const id = await storeExpense(expenseData); // sending request to the backend, to store this data
       expenseCtx.addExpense({...expenseData, id: id});
     }
