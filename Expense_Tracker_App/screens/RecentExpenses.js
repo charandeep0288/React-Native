@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
+import ErrorOverlay from "../components/UI/ErrorOverlay";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
 import { ExpensesContext } from "../store/expneses-context";
 import { getDateMinusDays } from "../util/date";
@@ -8,6 +9,7 @@ import { fetchExpenses } from "../util/http";
 function RecentExpenses() {
   const [isFetching, setIsFetching] = useState(true);
   const expensesCtx = useContext(ExpensesContext);
+  const [error, setError] = useState(); // Intial Value is "undefined" because initially we don't have any error, we can set this to some error message
 
   // const [fetchedExpenses, setFetchedExpenses] = useState([]);
 
@@ -19,16 +21,31 @@ function RecentExpenses() {
     // we can't convert useEffect's fn in argument into async await, so we have to do a work around by creating another function in useEffect fn and calling it in this useEffect
     async function getExpense() {
       setIsFetching(true); // we are showing LoadingOverlay before fetching the data
-      const expenses = await fetchExpenses();
+
+      try { // we have async await on this fn that's why we can use this try catch block here
+        const expenses = await fetchExpenses();
+        expensesCtx.setExpenses(expenses); // we need to have this inside try block because when we fetched the data successfully, then we want to set the expenses in the context.
+      } catch (error) {
+        setError("Could not fetch expense!");
+      }
+
+      // we are doing "setIsFetching" outside try catch block because we want to update value of this "isFetching" either we have an error or not.
       setIsFetching(false); // and now after we are done with fetching the data we set its state to false
-      expensesCtx.setExpenses(expenses);
     }
 
     getExpense();
   }, []);
 
-  if(isFetching) {
-    return <LoadingOverlay />
+  async function errorHandler() {
+    setError(null); // to clear the error, and that will remove the <ErrorOverlay>
+  }
+
+  if (error && !isFetching) {
+    return <ErrorOverlay message={error} onConfirm={errorHandler} />;
+  }
+
+  if (isFetching) {
+    return <LoadingOverlay />;
   }
 
   const recentExpenses = expensesCtx.expenses.filter((expense) => {
