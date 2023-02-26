@@ -21,8 +21,8 @@ function LoginScreen() {
         "Authentication failed ",
         "Could not log you in, Please check your credentials or try again later!"
       );
+      setIsAuthenticating(false); // we are going to do this set "setIsAuthenticating" to false in case of error only, because if we have it outside this catch block then we get error/warning saying we are tring to set the state of a screen that is not there, because we have switched the welcome screen after a successful login, Login Screen is no longer there.
     }
-    setIsAuthenticating(false);
   }
 
   if (isAuthenticating) {
