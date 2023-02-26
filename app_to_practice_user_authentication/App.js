@@ -1,7 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AppLoading from "expo-app-loading";
 
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
@@ -67,12 +69,40 @@ function Navigation() {
   );
 }
 
+function Root() {
+  const [isTryingLogin, setIsTryingLogin] = useState(true);
+  const authCtx = useContext(AuthContext);
+
+  useEffect(() => {
+    async function fetchToken() {
+      // "token" is the key using which we added token in the AsyncsStorage
+      const storedToken = await AsyncStorage.getItem("token"); // returns promise, so used async await
+
+      if (storedToken) {
+        authCtx.authenticate(storedToken);
+      }
+
+      setIsTryingLogin(false); // we are no longer trying the user to login 
+    }
+
+    fetchToken();
+  }, []);
+
+  if(isTryingLogin) { // to avoid that splash screen(login screen of a second or so) we get 
+    return <AppLoading />
+  }
+
+  return <Navigation />;
+}
+
 export default function App() {
+  // we are in the component where we have wraped components with Context, so we can't use "useContext" in this component, so we should create a new component(like Root in this case) and use "useContext" there.
+
   return (
     <>
       <StatusBar style="light" />
       <AuthContextProvider>
-        <Navigation />
+        <Root />
       </AuthContextProvider>
     </>
   );
