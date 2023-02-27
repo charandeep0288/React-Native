@@ -14,7 +14,7 @@ import ExpensesContextProvider from "./store/expneses-context";
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
-function ExpensesOverview() {
+function ExpensesOverview() { 
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
